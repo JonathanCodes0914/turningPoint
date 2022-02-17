@@ -1,0 +1,42 @@
+
+.EditProfile > h2 {
+    text-align: center;
+    text-decoration: 2px underline darkcyan;
+}
+
+.EditProfile_FormWrapper  {
+    margin-top: 20px;
+}
+.EditProfile_FormWrapper > form {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.EditProfile_FormWrapper > form > input {
+    height: 35px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.EditProfile_FormWrapper > form > span {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.EditProfile_FormWrapper > form > span > img {
+    width: 75px;
+    height: 75px;
+    margin-right: 50px;
+}
+
+.EditProfile_FormWrapper > form > button {
+    background: conic-gradient(from 120deg at 50% 50%, #6a6873, #615f69, #58565f, #4f4e56, #47454c, #3e3d43, #36353a, #2e2d32, #262529);
+    height: 50px;
+    color: white;
+    font-size: 20px;
+}

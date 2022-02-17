@@ -1,0 +1,61 @@
+.feed_contentAvatar {
+    position: relative;
+    left: 7px;
+margin: 10px;
+}
+
+.feed_contentUserInfo{
+    display: flex;
+    align-items: center;;
+}
+.feed_contentUserInfo > p {
+    padding-left: 10px;
+    
+}
+
+
+
+.feed_contentItem {
+    width: 100%;
+    
+    
+   
+}
+.feed_contentItem  > img {
+    width: 100vw;
+    height: 60vh;
+}
+.feed_contentItemInfoButtons {
+    position: relative;
+    display: flex;
+    width: 100vw;
+     
+}
+
+.feed_contentItemInfoButtons > button {
+    margin-left: 18px;
+}
+
+
+.feed_storyfeed_contentItemInfoDesc {
+    width: 100vw;
+    padding-left: 20px;
+    padding-top: 10px;
+    line-height: 2;
+}
+
+
+@media (min-width:1025px){ 
+    .post {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .feed_contentItem > img {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    
+}

@@ -1,0 +1,27 @@
+.requests {
+
+}
+
+.requests > h2 {
+    text-align: center;
+    text-decoration: 3px underline darkcyan;
+}
+
+.singleRequest {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+.request_ActionButtons > button{
+padding: 2px;
+border-radius: 5px;
+color: white;
+}
+
+.request_ActionButtons > :first-child {
+   background-color: darkcyan;
+}
+
+.request_ActionButtons > :nth-child(2) {
+    background-color: darkgrey;
+}

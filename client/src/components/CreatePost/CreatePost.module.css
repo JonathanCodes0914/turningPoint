@@ -1,0 +1,28 @@
+.createpost {
+}
+.createPost_uploadButtons {
+    display: flex;
+   justify-content: space-evenly;
+}
+
+
+
+.createPost_uploadButtons > label {
+    background-color: darkcyan;
+    color: white;
+    padding: 1rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+.createpost_form {
+    position: relative;
+    top: 125px;
+}
+
+.uploadFile{
+border-radius: 10px;
+}

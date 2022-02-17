@@ -1,0 +1,57 @@
+.viewpost_userInfo {
+    display: flex;
+align-items: center;
+}
+
+.viewpost_userInfo > p {
+    padding-left: 10px;
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+.viewpost_avatar { 
+    position: relative;
+    left: 7px;
+    margin: 10px;
+}
+
+.viewpost_contentItem > img {
+width: 100vw;
+height: 60vh;
+}
+
+
+.viewpost_contentItemInfoDesc{
+    width: 100vw;
+    padding-left: 20px;
+    padding-top: 5px;
+    line-height: 1;
+ }
+.viewpost_contentItemInfoButtons > button {
+    margin-left: 18px;
+}
+
+.viewpost_caption {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 20px;
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.comment > p {
+  font-size: 10px;
+}
+
+.comment > span {
+    display: flex;
+    max-width: 500px;
+   
+    word-break: break-word;
+    
+}
