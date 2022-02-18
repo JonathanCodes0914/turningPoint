@@ -11,12 +11,14 @@ import { selectUser, login, selectToken } from '../../features/userSlice';
 import {storage } from '../../api/Firebase';
 import firebase from 'firebase';
 import { clientCreatePostRequest } from '../../api/post';
+import {useHistory} from 'react-router-dom';
 
 
 const CreatePost = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const token = useSelector(selectToken);
+  const history = useHistory();
   const [files, setFiles] = useState([ [], [], []]);
   const [caption, setCaption] = useState('');
   const [tags, setTags] = useState('');
@@ -66,6 +68,7 @@ const CreatePost = () => {
         clientCreatePostRequest(data, token).then((response) => {
           if(response.status === 200) {
             alert("post created")
+            history.push('/feed')
           }
         })
     }

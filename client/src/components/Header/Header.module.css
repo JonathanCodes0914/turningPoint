@@ -47,9 +47,8 @@ z-index: 2;
     top: 0;
     width: 250px;
     height: 100%;
-    background: rgba(209, 234, 255, 0.2); 
+    background-color: black; 
     z-index: 1;
-    backdrop-filter: blur(5px);
 }
 
 .menu > ul {
@@ -65,12 +64,9 @@ z-index: 2;
     font-weight: bold;
     color: black;
     list-style: none;
-   
+
+ 
   
-}
-
-.blur {
-
 }
 
 .headerCloseIcon {
@@ -82,4 +78,45 @@ z-index: 2;
     font-size: 20px;
     list-style: none;
     color: white;
+   
+}
+
+.menuLink:hover {
+    cursor: pointer;
+    background-color: white;
+    color: darkcyan;
+}
+.listItemWrapper {
+    display: none;
+}
+@media (min-width:1025px){ 
+  
+    .menu {
+        display: none;
+    }
+.headerIcon {
+    display: none;
+}
+    .listItemWrapper {
+        position: relative;
+        display: flex;
+        color: white;
+        list-style: none;
+        right: 120px;
+        bottom: 10px;
+    }
+
+.listItemWrapper > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 40px;
+   
+}
+
+.listItemWrapper > li:hover {
+    color: darkcyan;
+    cursor: pointer;
+}
+ 
 }
