@@ -62,9 +62,11 @@ const Header = () => {
                 {/* <Avatar /> */}
             </div>
             <div className={styles.headerRight}>
-                {menuActive === false && <IconButton className={styles.headerIcon} onClick={() => setMenuActive(true)}>
-                    <MenuIcon />
-                </IconButton>}
+                {menuActive === false && <div className={styles.menuIcon}>
+                    <IconButton   onClick={() => setMenuActive(true)}>
+                    <MenuIcon style={{color: 'darkcyan'}} />
+                </IconButton>
+                    </div>}
                 <div className={styles.headerRightDesktop}>
 
                     {user ? <>
@@ -78,7 +80,10 @@ const Header = () => {
                             <li onClick={() => history.push(`/profile/${user._id}`)}> <IconButton><AccountBoxOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Profile</li>
                             <li > <IconButton><ExitToAppOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Sign Out</li>
                         </ul>
-                    </> : <li onClick={() => history.push('/')}>  <IconButton><HomeOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Home</li>}
+                    </> : <ul className={styles.listItemWrapper}>
+                        <li onClick={() => history.push('/')}>  <IconButton><HomeOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Home</li>
+                        <li onClick={() => history.push('/login')}>  <IconButton><LoginIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Login/Signup</li>
+                    </ul>}
                 </div>
             </div>
         </div >

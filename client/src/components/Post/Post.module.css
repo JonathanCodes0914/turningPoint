@@ -44,6 +44,11 @@ margin: 10px;
     line-height: 2;
 }
 
+.settingIcons {
+    position: relative;
+    justify-content: end;
+}
+
 
 @media (min-width:1025px){ 
     .post {

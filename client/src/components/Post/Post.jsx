@@ -6,9 +6,11 @@ import ChatBubbleOutlineOutlined from '@mui/icons-material/ChatBubbleOutlineOutl
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import styles from '../Post/Post.module.css';
 import { clientInteractPost } from '../../api/post';
+import DeleteModal from '../Modal/DeleteModal';
 
 
 const Post = ({story, handleShowComments}) => {
@@ -17,6 +19,7 @@ const Post = ({story, handleShowComments}) => {
     const token = useSelector(selectToken)
     const [likeCount , setLikeCount] = useState(story.likes.length);
     const [postLiked, setPostLiked] = useState(false);
+    const [modalDelete, setDeleteModal] = useState(false);
 
     useEffect(() => {
         //check if userid exist if so postlike is true
@@ -46,10 +49,13 @@ const Post = ({story, handleShowComments}) => {
     }
   return (
     <div className={styles.post}>
+
+        {modalDelete && <DeleteModal />}
            <span className={styles.feed_contentUserInfo}>
                                             <Avatar className={styles.feed_contentAvatar} src={story.user._id.profileImg} />
                                             <p>{story.user._id.username}</p>
                                         </span>
+                                        <MoreVertIcon className={styles.settingIcons} onClick={() => setDeleteModal(true)}/>
                                         <div className={styles.blur}></div>
                                         <div className={styles.feed_contentItem}>
                                             <img src={story.content.attachments[0].url} alt='feed content' />

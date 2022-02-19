@@ -91,10 +91,8 @@ z-index: 2;
 }
 @media (min-width:1025px){ 
   
-    .menu {
-        display: none;
-    }
-.headerIcon {
+  
+.menuIcon {
     display: none;
 }
     .listItemWrapper {
@@ -103,7 +101,7 @@ z-index: 2;
         color: white;
         list-style: none;
         right: 120px;
-        bottom: 10px;
+        top: 20px;
     }
 
 .listItemWrapper > li {

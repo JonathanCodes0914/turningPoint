@@ -105,7 +105,7 @@ const Feed = () => {
                             <div className={styles.feed_LeftContentWrapper}>
                                 <div className={styles.feed_LeftContentTop}>
                                     <img className={styles.feed_LeftContentTopBackground} src='https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80' />
-                                    <img className={styles.feed_LeftContentTopAvatar} src='https://media-exp1.licdn.com/dms/image/D4E35AQFblYA_LwCWsg/profile-framedphoto-shrink_100_100/0/1642728454466?e=1645045200&v=beta&t=g6g3Jihx8jsv9Oxvyooe386p_xDhysYW74la0bg6rFQ' />
+                                    <img className={styles.feed_LeftContentTopAvatar} src={user.profileImg} />
                                     <p>{user.firstname} {user.lastname}</p>
                                 </div>
 
