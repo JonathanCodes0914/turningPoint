@@ -19,6 +19,7 @@ import Post from '../../components/Post/Post';
 import { gsap } from "gsap";
 
 
+
 const Feed = () => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser)
@@ -51,7 +52,7 @@ const Feed = () => {
             setNews(filterArticles)
         })
         gsap.to(postRef.current, { rotation: "+=360" });
-    }, [])
+    }, [showCreatePost])
 
     const handleShowComments = (postId) => {
         //filter post by id and extract comments from it after populated
@@ -203,7 +204,7 @@ const Feed = () => {
                     <IconButton onClick={() => setShowCreatePost(false)}>
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
-                    <CreatePost />
+                    <CreatePost setShowCreatePost={setShowCreatePost}/>
 
                 </div>
             )}

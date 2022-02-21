@@ -12,9 +12,10 @@ import {storage } from '../../api/Firebase';
 import firebase from 'firebase';
 import { clientCreatePostRequest } from '../../api/post';
 import {useHistory} from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
-const CreatePost = () => {
+const CreatePost = ({setShowCreatePost}) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const token = useSelector(selectToken);
@@ -67,8 +68,7 @@ const CreatePost = () => {
         //create client api call to backend to create post
         clientCreatePostRequest(data, token).then((response) => {
           if(response.status === 200) {
-            alert("post created")
-            history.push('/feed')
+            setShowCreatePost(false)
           }
         })
     }

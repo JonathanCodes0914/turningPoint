@@ -40,7 +40,7 @@ const Header = () => {
                     <IconButton onClick={() => setMenuActive(false)}>
                         <CloseIcon fontSize='large' className={styles.headerCloseIcon} />
                     </IconButton>
-                    <Link className={styles.menuLink} to='/'><li> <IconButton><HomeOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Home</li></Link>
+                    <Link className={styles.menuLink} to='/' onClick={() => setMenuActive(false)}><li> <IconButton><HomeOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Home</li></Link>
                     <hr />
                     {user && <>
                         <Link onClick={() => setMenuActive(false)} className={styles.menuLink} to='/feed' > <li> <IconButton><DynamicFeedOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Feed</li></Link>
@@ -53,7 +53,7 @@ const Header = () => {
                         <hr />
                     </>}
 
-                    {user ? <Link className={styles.menuLink} to={`/profile/${user._id}`} onClick={() => handleLogout()}><li > <IconButton><ExitToAppOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Sign Out</li> </Link> : <Link className={styles.menuLink} to='/login'><li> <IconButton><LoginIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Login/Signup</li></Link>}
+                    {user ? <Link className={styles.menuLink} to={`/profile/${user._id}`} onClick={() => handleLogout()}><li > <IconButton><ExitToAppOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Sign Out</li> </Link> : <Link className={styles.menuLink} to='/login' onClick={() => setMenuActive(false)}><li> <IconButton><LoginIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Login/Signup</li></Link>}
                     <hr />
                 </ul>
                 <div className={styles.blur}></div>
