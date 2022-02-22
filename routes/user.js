@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const expressJwt = require('express-jwt');
 require('dotenv').config()
 
 const {userById, searchUsers, editProfile} = require("../controllers/user");
@@ -11,8 +8,8 @@ router.get('/secret/:userId', requireSignIn , isAuth,(req,res) => {
     res.json(req.profile)
 })
 
-router.get('/search', searchUsers)
-router.post('/editProfile' , editProfile)
+router.get('/search',requireSignIn, searchUsers)
+router.post('/editProfile', requireSignIn,  editProfile)
 router.param('userId', userById);
 
 module.exports = router;

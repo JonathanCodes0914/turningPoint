@@ -20,7 +20,6 @@ const Post = ({ story, handleShowComments }) => {
     const token = useSelector(selectToken)
     const [likeCount, setLikeCount] = useState(story.likes.length);
     const [postLiked, setPostLiked] = useState(false);
-    const [modalDelete, setDeleteModal] = useState(false);
     const [videos, setVideos] = useState([]);
     const [images, setImages] = useState([]);
     const [audios, setAudios] = useState([]);
@@ -37,7 +36,6 @@ const Post = ({ story, handleShowComments }) => {
 
     const handlePostInteraction = (postId, userId, type) => {
         const data = { postId, userId, type };
-        console.log(data)
         clientInteractPost(data, token).then((res) => {
             if (res.status === 200) {
                 if (type === 'Like') {
@@ -54,46 +52,46 @@ const Post = ({ story, handleShowComments }) => {
         })
     }
 
-    const handleDisplayAttachments = (attachments) => {
-        if (attachments.length === 1 && attachments[0].contentType === 'image') {
-            return <div className={styles.slider}>
-                <img src={attachments[0].url} alt='Content' />
-            </div>
-        } else if (attachments.length === 1 && attachments[0].contentType === 'video') {
-            return <div className={styles.slider}>
-                <video muted autoPlay>
-                    <source src={attachments[0].url} />
-                </video>
-            </div>
-        } else if (attachments.length === 1 && attachments[0].contentType === 'audio') {
-            return <div className={styles.slider}>
-                <audio>
-                    <source src={attachments[0].url} />
-                </audio>
-            </div>
-        } else if (attachments.length > 1) {
-            console.log(attachments.length)
-            for (let i = 0; i < attachments.length; i++) {
-                if (attachments[i].contentType === 'image') {
-                    return <div className={styles.slider}>
-                        <img src={attachments[i].url} alt='Content' />
-                    </div>
-                } else if (attachments[i].contentType === 'video') {
-                    return <div className={styles.slider}>
-                        <video>
-                            <source src={attachments[i].url} />
-                        </video>
-                    </div>
-                } else if (attachments[i].contentType === 'audio') {
-                    return <div className={styles.slider}>
-                        <audio>
-                            <source src={attachments[i].url} />
-                        </audio>
-                    </div>
-                }
-            }
-        }
-    };
+    // const handleDisplayAttachments = (attachments) => {
+    //     if (attachments.length === 1 && attachments[0].contentType === 'image') {
+    //         return <div className={styles.slider}>
+    //             <img src={attachments[0].url} alt='Content' />
+    //         </div>
+    //     } else if (attachments.length === 1 && attachments[0].contentType === 'video') {
+    //         return <div className={styles.slider}>
+    //             <video muted autoPlay>
+    //                 <source src={attachments[0].url} />
+    //             </video>
+    //         </div>
+    //     } else if (attachments.length === 1 && attachments[0].contentType === 'audio') {
+    //         return <div className={styles.slider}>
+    //             <audio>
+    //                 <source src={attachments[0].url} />
+    //             </audio>
+    //         </div>
+    //     } else if (attachments.length > 1) {
+    //         console.log(attachments.length)
+    //         for (let i = 0; i < attachments.length; i++) {
+    //             if (attachments[i].contentType === 'image') {
+    //                 return <div className={styles.slider}>
+    //                     <img src={attachments[i].url} alt='Content' />
+    //                 </div>
+    //             } else if (attachments[i].contentType === 'video') {
+    //                 return <div className={styles.slider}>
+    //                     <video>
+    //                         <source src={attachments[i].url} />
+    //                     </video>
+    //                 </div>
+    //             } else if (attachments[i].contentType === 'audio') {
+    //                 return <div className={styles.slider}>
+    //                     <audio>
+    //                         <source src={attachments[i].url} />
+    //                     </audio>
+    //                 </div>
+    //             }
+    //         }
+    //     }
+    // };
 
     const setAttachments = (attachments) => {
         if (attachments.length === 1 && attachments[0].contentType === 'image') {

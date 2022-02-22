@@ -32,7 +32,6 @@ const Profile = () => {
         postId: '',
     })
     const currentUserId = user._id === window.location.pathname.split('/')[2] ? user._id : window.location.pathname.split('/')[2];
-    console.log(pageUser)
     useEffect(() => {
         clientGetProfilePostsRequest(currentUserId, token).then((response) => {
             if (response.status === 200) {
@@ -133,7 +132,7 @@ const Profile = () => {
                     <IconButton onClick={() => viewPost.state ? setViewPost(false) : setEditProfile(false)}>
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
-                    {viewPost.state === true && <ViewPost postId={viewPost.postId} token={token} />}
+                    {viewPost.state === true && <ViewPost user={user} postId={viewPost.postId} token={token} />}
                     {editProfile && <EditProfile user={user} token={token}/>}
                 </> : <>
                     <div className={styles.profile_background}>

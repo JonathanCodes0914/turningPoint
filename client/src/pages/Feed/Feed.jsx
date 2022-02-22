@@ -36,14 +36,12 @@ const Feed = () => {
     const [feedPosts, setFeedPosts] = useState([]);
     const [news, setNews] = useState([]);
     const postRef = useRef();
-    console.log(feedStories)
 
     useEffect(() => {
         //scroll to top of page 
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         clientGetFeedRequest(user._id, token).then((res) => {
             if (res.status === 200) {
-                console.log("feed posts loaded", res.data.data)
                 setFeedPosts(res.data.data)
             }
         })
@@ -52,24 +50,19 @@ const Feed = () => {
             setNews(filterArticles)
         })
         gsap.to(postRef.current, { rotation: "+=360" });
-    }, [showCreatePost])
+    }, [showCreatePost, showComments])
 
     const handleShowComments = (postId) => {
         //filter post by id and extract comments from it after populated
         const foundPost = feedPosts.filter((post) => post._id === postId)
-        console.log('comments', foundPost[0].comments, foundPost)
     //setcurrentpostcomments array to from the extraction
         setShowComments({
             state: true,
             postId: postId,
             comments: foundPost[0].comments
         })
-    //pass currentpostcomments to the comments component
-
-    //set showcomments to true
 
     }
-    console.log('news',news)
     return (
         <div className={styles.feed}>
             {showComments.state === false && showCreatePost === false && showRequests === false && (

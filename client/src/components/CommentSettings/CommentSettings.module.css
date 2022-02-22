@@ -1,0 +1,17 @@
+.CommentSettings {
+    width: 100%;
+    height: 100vh;
+}
+
+.CommentSettings_Buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 200px;
+}
+.CommentSettings_Buttons > button {
+    height: 50px;
+    background-color: darkcyan;
+    color: white;
+    font-weight: bold;
+}

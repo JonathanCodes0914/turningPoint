@@ -4,11 +4,11 @@ require('dotenv').config();
 
 const { requireSignIn , isAuth, isAdmin} = require('../controllers/authenticaton');
 const { interactPost,createPost, getAllPostByUser, getOnePostByUser, getUserFeedFollowersPosts} = require("../controllers/post");
-router.post('/createPost', createPost)
-router.post('/interactPost', interactPost)
-router.get('/getUserPosts/:userId', getAllPostByUser)
-router.get('/getUserPost/:postId', getOnePostByUser)
-router.get('/getFeedPosts/:userId', getUserFeedFollowersPosts)
+router.post('/createPost', requireSignIn,  createPost )
+router.post('/interactPost', requireSignIn, interactPost)
+router.get('/getUserPosts/:userId',requireSignIn, getAllPostByUser)
+router.get('/getUserPost/:postId', requireSignIn, getOnePostByUser)
+router.get('/getFeedPosts/:userId',requireSignIn, getUserFeedFollowersPosts)
 
 
 module.exports = router;
