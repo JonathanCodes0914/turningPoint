@@ -4,7 +4,10 @@ import { selectUser, login, selectToken } from '../../features/userSlice';
 import { Avatar, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ViewPost from '../../components/ViewPost/ViewPost';
 import styles from './Explore.module.css';
+import { clientGetPexelsImages } from '../../api/pexels';
 
 const Explore = () => {
     const dispatch = useDispatch();
@@ -15,6 +18,11 @@ const Explore = () => {
     const [exploreStories, setExploreStories] = useState();
     const [searchValue, setSearchValue] = useState('');
     const [userData, setUserData] = useState([]);
+    const [pexelsPhotos, setPexelsPhotos] = useState([]);
+    const [viewPhoto, setViewPhoto] = useState({
+        state: false,
+        photo: {}
+    })
     const gridCols = [[], [], [], []];
 
     const results = Array(50).fill({ caption: 'america the rgeatest', attachment: 'https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80', username: 'cue banks' });
@@ -43,6 +51,8 @@ const Explore = () => {
     }
 
     useEffect(() => {
+
+        clientGetPexelsImages().then((res) => setPexelsPhotos(res.data.photos))
         // const exploreStoriesItems = Array(8).fill({ caption: 'america the rgeatest', attachment: 'https://cdn.cheapism.com/images/011618_most_beautiful_views_in_the_world_sli.max-784x410_ZXOqfVp.jpg', username: 'cue banks' })
         // setExploreStories(exploreStoriesItems)
         // exploreStories.forEach((story, i) => {
@@ -56,27 +66,39 @@ const Explore = () => {
 
         // });
     }, [])
+    console.log(pexelsPhotos)
     return (
         <div className={styles.explore}>
-            <div className={styles.explore_search}>
-                <label>Find Other Users</label>
-                <input type='text' onChange={(e) => {
-                    handleSearchRequest(e.target.value)
-                }} placeholder='Explore' />
-            </div>
-            <div className={styles.explore_contentRow}>
-                {userData.length > 0 && searchValue.trim().length > 0 ? userData.map((user) => {
-                    return <div className={styles.exploreUser} onClick={() => history.push(`/profile/${user._id}`)}>
-                        <Avatar src={user.profileImg} alt='avatar image' />
-                        <p>{user.username}</p>
-                    </div>
-                }) : null}
-            </div>
-            <div className={styles.explore_Tags}>
-                {results.map((tag) => {
-                    return <img src={tag.attachment} />
-                })}
-            </div>
+            {viewPhoto.state === true ? <div className={styles.explore_singlePexelsPhotoWrapper}>
+            <IconButton onClick={() => setViewPhoto(false)}>
+                        <ArrowBackIcon fontSize='large' style={{color: 'white'}} />
+                    </IconButton>
+                <img className={styles.explore_singleImg} src={viewPhoto.photo.src.original} alt={viewPhoto.photo.alt} />
+                <a href={viewPhoto.photo.photographer_url}><p>By: {viewPhoto.photo.photographer}</p></a>
+
+                <p>{viewPhoto.photo.alt}</p>
+            </div> : <>
+                <div className={styles.explore_search}>
+                    <label>Find Other Users</label>
+                    <input type='text' onChange={(e) => {
+                        handleSearchRequest(e.target.value)
+                    }} placeholder='Explore' />
+                </div>
+                <div className={styles.explore_contentRow}>
+                    {userData.length > 0 && searchValue.trim().length > 0 ? userData.map((user) => {
+                        return <div className={styles.exploreUser} onClick={() => history.push(`/profile/${user._id}`)}>
+                            <Avatar src={user.profileImg} alt='avatar image' />
+                            <p>{user.username}</p>
+                        </div>
+                    }) : null}
+                </div>
+                <div className={styles.explore_Tags}>
+                    {pexelsPhotos.length > 0 && pexelsPhotos.map((photo) => {
+                        return <img src={photo.src.medium} onClick={() => setViewPhoto({ state: true, photo: photo })} />
+                    })}
+                </div>
+            </>}
+
         </div>
     )
 }

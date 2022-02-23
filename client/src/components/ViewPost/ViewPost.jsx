@@ -38,7 +38,7 @@ const ViewPost = ({ postId, token , user}) => {
             }
     
         })
-    }, [likeCount])
+    }, [likeCount, postId, token, user])
 
     const setAttachments = (attachments) => {
 

@@ -45,12 +45,30 @@
 
 .explore_Tags {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: auto auto auto;
     width: 100vw;
 }
 
 .explore_Tags > img {
     max-width: 100%;
     height: 100px;
-    width: auto\9; /* ie8 */
+    width: 200px
+}
+.explore_Tags > img:hover {
+    cursor: pointer;
+}
+
+.explore_singlePexelsPhotoWrapper {
+    width: 100vw ;
+    height: 100vh;
+    background-color: black;
+    color: white;
+
+}
+
+
+.explore_singleImg {
+    width: 100vw;
+    height: 50vh;
+    padding-top: 20px;
 }
