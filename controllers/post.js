@@ -173,6 +173,24 @@ exports.interactPost = async (req, res) => {
             })
         }
 
+        if(type === 'Post Delete') {
+            Post.updateOne(
+                { _id: postId },
+                { $pull: { 'posts': postId } }
+            )
+
+            Post.findByIdAndDelete(postId, (err, docs) => {
+                if (err) {
+                    return res.status(400).send(err)
+                }
+
+                return res.status(200).json({
+                    msg: 'Post Deleted',
+                    docs
+                })
+            })
+        }
+
     } catch (err) {
         return res.status(400).send(err)
     }

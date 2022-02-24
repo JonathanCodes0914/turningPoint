@@ -90,6 +90,10 @@
 .feed_Left {
      display: none;
 }
+.feed_right {
+    
+}
+/*Laptop and up*/
 @media (min-width:1025px){ 
    html {
       

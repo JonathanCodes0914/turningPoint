@@ -23,10 +23,6 @@ const Explore = () => {
         state: false,
         photo: {}
     })
-    const gridCols = [[], [], [], []];
-
-    const results = Array(50).fill({ caption: 'america the rgeatest', attachment: 'https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80', username: 'cue banks' });
-
 
     const handleSearchRequest = (value) => {
         setSearchValue(value)
@@ -70,10 +66,11 @@ const Explore = () => {
     return (
         <div className={styles.explore}>
             {viewPhoto.state === true ? <div className={styles.explore_singlePexelsPhotoWrapper}>
-            <IconButton onClick={() => setViewPhoto(false)}>
-                        <ArrowBackIcon fontSize='large' style={{color: 'white'}} />
-                    </IconButton>
-                <img className={styles.explore_singleImg} src={viewPhoto.photo.src.original} alt={viewPhoto.photo.alt} />
+                <IconButton onClick={() => setViewPhoto(false)}>
+                    <ArrowBackIcon fontSize='large' style={{ color: 'white' }} />
+                </IconButton>
+                <center><img className={styles.explore_singleImg} src={viewPhoto.photo.src.original} alt={viewPhoto.photo.alt} />
+                </center>
                 <a href={viewPhoto.photo.photographer_url}><p>By: {viewPhoto.photo.photographer}</p></a>
 
                 <p>{viewPhoto.photo.alt}</p>

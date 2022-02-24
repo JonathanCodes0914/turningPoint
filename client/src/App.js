@@ -10,7 +10,7 @@ import Login from './pages/Login/Login';
 import Profile from './pages/Profile/Profile';
 import Feed from './pages/Feed/Feed';
 import Explore from './pages/Explore/Explore';
-import Request from './pages/Request/Request';
+import { PrivateRoute } from './components/PrivateRoute';
 
 
 function App () {
@@ -22,12 +22,11 @@ function App () {
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/login' exact component={Login} />
-        <Route path='/profile/:id' exact component={Profile} />
-        <Route path='/feed' exact component={Feed} />
-        <Route path='/explore' exact component={Explore}/>
-        <Route path='/content' exact component={Content}/>
-        <Route path='/content/:id' exact component={SingleVideo}/>
-        
+        <PrivateRoute path='/profile/:id' exact component={Profile} />
+        <PrivateRoute path='/feed' exact component={Feed} />
+        <PrivateRoute path='/explore' exact component={Explore}/>
+        <PrivateRoute path='/content' exact component={Content}/>
+        <PrivateRoute path='/content/:id' exact component={SingleVideo}/>
       </Switch>
       </Router>
       <Footer />
