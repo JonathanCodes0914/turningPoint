@@ -46,9 +46,22 @@ margin: 10px;
 
 .settingIcons {
     position: relative;
-    justify-content: end;
+    display: block;
+    float: right;
+    margin-right: 10px;
 }
 
+.sliderAttachment {
+    width: 100vw;
+    height: 50vh;
+}
+
+
+.postSettings {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+}
 
 @media (min-width:1025px){ 
     .post {

@@ -75,7 +75,7 @@ const Profile = () => {
                     postId: postId,
                 })
             }}>
-                <source src={attachments[0].url} />
+                <source src={'https://4.bp.blogspot.com/-uhjF2kC3tFc/U_r3myvwzHI/AAAAAAAACiw/tPQ2XOXFYKY/s1600/Circles-3.gif'} />
             </audio>
         }
         return null

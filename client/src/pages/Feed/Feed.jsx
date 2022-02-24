@@ -35,6 +35,7 @@ const Feed = () => {
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [feedPosts, setFeedPosts] = useState([]);
     const [news, setNews] = useState([]);
+    const [reload, setReload] = useState(false);
     const postRef = useRef();
 
     useEffect(() => {
@@ -50,7 +51,7 @@ const Feed = () => {
             setNews(filterArticles)
         })
         gsap.to(postRef.current, { rotation: "+=360" });
-    }, [showCreatePost, showComments])
+    }, [showCreatePost, showComments, reload])
 
     const handleShowComments = (postId) => {
         //filter post by id and extract comments from it after populated
@@ -146,7 +147,7 @@ const Feed = () => {
                                 </IconButton>
                             </div>
                             <div className={styles.feedWrapper}>
-                                {feedPosts.map((story) => <Post story={story} handleShowComments={handleShowComments}/>)}
+                                {feedPosts.map((story) => <Post story={story} handleShowComments={handleShowComments} setReload={setReload}/>)}
                             </div>
 
                         </div>

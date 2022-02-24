@@ -1,5 +1,4 @@
 import React from 'react';
-import { clientInteractPost } from '../../api/post';
 import styles from '../CommentSettings/CommentSettings.module.css';
 
 const CommentSettings = ({handleDeleteComment}) => {
