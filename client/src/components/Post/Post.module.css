@@ -63,6 +63,21 @@ margin: 10px;
     background-color: white;
 }
 
+
+.postSettingsButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.postSettingsButtons > button {
+    width: 150px;
+    height: 40px;
+    color: white;
+    background-color: darkcyan;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+    margin-left: 50px;
+}
 @media (min-width:1025px){ 
     .post {
         max-width: 100%;

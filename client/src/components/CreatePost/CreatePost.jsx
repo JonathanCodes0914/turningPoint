@@ -13,6 +13,7 @@ import firebase from 'firebase';
 import { clientCreatePostRequest } from '../../api/post';
 import {useHistory} from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loading from '../Loading/Loading';
 
 
 const CreatePost = ({setShowCreatePost}) => {
@@ -23,6 +24,7 @@ const CreatePost = ({setShowCreatePost}) => {
   const [files, setFiles] = useState([ [], [], []]);
   const [caption, setCaption] = useState('');
   const [tags, setTags] = useState('');
+  const [loading , setLoading] = useState(false);
 
   console.log('files', files[0])
 
@@ -42,6 +44,7 @@ const CreatePost = ({setShowCreatePost}) => {
 
   const createPost = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const limitedFiles = [...files[0], ...files[1], ...files[2]]
 
     console.log('limited',limitedFiles)
@@ -68,7 +71,9 @@ const CreatePost = ({setShowCreatePost}) => {
         //create client api call to backend to create post
         clientCreatePostRequest(data, token).then((response) => {
           if(response.status === 200) {
+            setLoading(false)
             setShowCreatePost(false)
+            
           }
         })
     }
@@ -76,115 +81,116 @@ const CreatePost = ({setShowCreatePost}) => {
   }
 
   return <div className={styles.createpost}>
-    <div className={styles.createpost_form}>
+    {loading ? <Loading /> :  <div className={styles.createpost_form}>
 
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <center> <h2>CREATE A NEW POST</h2></center>
-        <Form.Control onChange={(e) => setCaption(e.target.value)} as="textarea" rows={5} placeholder='Write a caption...' />
-      </Form.Group>
+<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+  <center> <h2>CREATE A NEW POST</h2></center>
+  <Form.Control onChange={(e) => setCaption(e.target.value)} as="textarea" rows={5} placeholder='Write a caption...' />
+</Form.Group>
 
-      <div className={styles.createPost_uploadButtons}>
+<div className={styles.createPost_uploadButtons}>
 
-        <label for='uploadFile'>
+  <label for='uploadFile'>
 
-          <ImageIcon fontSize='large' />
+    <ImageIcon fontSize='large' />
 
-        </label>
-        <input onChange={(e) => {
-          if (e.target.files.length === 0) return
-          setFiles(oldArray => [e.target.files, ...oldArray])
-        }}
-          type="file"
-          title=""
-          accept="image/"
-          multiple
-          id='uploadFile'
-          hidden
-          className={styles.uploadFile}
-        />
+  </label>
+  <input onChange={(e) => {
+    if (e.target.files.length === 0) return
+    setFiles(oldArray => [e.target.files, ...oldArray])
+  }}
+    type="file"
+    title=""
+    accept="image/"
+    multiple
+    id='uploadFile'
+    hidden
+    className={styles.uploadFile}
+  />
 
-        <label for='uploadFile'>
+  <label for='uploadFile'>
 
-          <VideoFileIcon fontSize='large' />
+    <VideoFileIcon fontSize='large' />
 
-        </label>
-        <input onChange={(e) => {
-          if (e.target.files.length === 0) return
-          setFiles(oldArray => [e.target.files, ...oldArray])
-        }} type="file"
-          title=""
-          accept=" video/"
-          multiple
-          id='uploadFile'
-          hidden
-          className={styles.uploadFile}
-        />
+  </label>
+  <input onChange={(e) => {
+    if (e.target.files.length === 0) return
+    setFiles(oldArray => [e.target.files, ...oldArray])
+  }} type="file"
+    title=""
+    accept=" video/"
+    multiple
+    id='uploadFile'
+    hidden
+    className={styles.uploadFile}
+  />
 
-        <label for='uploadFile'>
+  <label for='uploadFile'>
 
-          <MusicVideoIcon fontSize='large' />
+    <MusicVideoIcon fontSize='large' />
 
-        </label>
-        <input onChange={(e) => {
-          if (e.target.files.length === 0) return
-          setFiles(oldArray => [e.target.files, ...oldArray])
-        }} type="file"
-          title=""
-          accept="audio/"
-          multiple
-          id='uploadFile'
-          hidden
-          className={styles.uploadFile}
-        />
-        {/* <Button size="sm" active>
-          <IconButton style={{ color: 'white' }} size='large'>
-            <ImageIcon />
-            <input onChange={(e) => setImages(e.target.files)} type="file"
-          title=""
-          accept="image/"
-          multiple
-          id={styles.uploadFile}
+  </label>
+  <input onChange={(e) => {
+    if (e.target.files.length === 0) return
+    setFiles(oldArray => [e.target.files, ...oldArray])
+  }} type="file"
+    title=""
+    accept="audio/"
+    multiple
+    id='uploadFile'
+    hidden
+    className={styles.uploadFile}
+  />
+  {/* <Button size="sm" active>
+    <IconButton style={{ color: 'white' }} size='large'>
+      <ImageIcon />
+      <input onChange={(e) => setImages(e.target.files)} type="file"
+    title=""
+    accept="image/"
+    multiple
+    id={styles.uploadFile}
 
-        />
-          </IconButton>
-        </Button>{' '}
-        <Button size="sm" active>
-          <IconButton className={styles.iconButton} style={{ color: 'white' }} size='large'>
-            <VideoFileIcon />
-            <input onChange={(e) => setVideos(e.target.files)} type="file"
-          title=""
-          accept="video/"
-          multiple
-          id={styles.uploadFile}
+  />
+    </IconButton>
+  </Button>{' '}
+  <Button size="sm" active>
+    <IconButton className={styles.iconButton} style={{ color: 'white' }} size='large'>
+      <VideoFileIcon />
+      <input onChange={(e) => setVideos(e.target.files)} type="file"
+    title=""
+    accept="video/"
+    multiple
+    id={styles.uploadFile}
 
-        />
-          </IconButton>
-        </Button>{' '}
-        <Button size="sm" active>
-          <IconButton style={{ color: 'white' }} size='large'>
-        
+  />
+    </IconButton>
+  </Button>{' '}
+  <Button size="sm" active>
+    <IconButton style={{ color: 'white' }} size='large'>
+  
 
-            <label for='uploadFile'>
-            <MusicVideoIcon />
-            </label>
-            <input onChange={(e) => setImages(e.target.files)} type="file"
-          title=""
-          accept="image/"
-          multiple
-          id={styles.uploadFile}
+      <label for='uploadFile'>
+      <MusicVideoIcon />
+      </label>
+      <input onChange={(e) => setImages(e.target.files)} type="file"
+    title=""
+    accept="image/"
+    multiple
+    id={styles.uploadFile}
 
-        />
-          </IconButton>
-        </Button>{' '} */}
-      </div>
-      <br />
-      <div className="d-grid gap-2">
-        <Button variant="dark" size="lg" onClick={(e) => createPost(e)}>
-          CREATE POST
-        </Button>
+  />
+    </IconButton>
+  </Button>{' '} */}
+</div>
+<br />
+<div className="d-grid gap-2">
+  <Button variant="dark" size="lg" onClick={(e) => createPost(e)}>
+    CREATE POST
+  </Button>
 
-      </div>
-    </div>
+</div>
+</div>}
+   
   </div>;
 };
 

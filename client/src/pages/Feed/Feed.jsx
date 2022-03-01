@@ -17,6 +17,7 @@ import { clientGetFeedRequest } from '../../api/post';
 import { clientGetNewsHeadlines } from '../../api/news';
 import Post from '../../components/Post/Post';
 import { gsap } from "gsap";
+import Loading from '../../components/Loading/Loading';
 
 
 
@@ -36,11 +37,13 @@ const Feed = () => {
     const [feedPosts, setFeedPosts] = useState([]);
     const [news, setNews] = useState([]);
     const [reload, setReload] = useState(false);
+    const [loading, setLoading] = useState(false);
     const postRef = useRef();
 
     useEffect(() => {
         //scroll to top of page 
         document.body.scrollTop = document.documentElement.scrollTop = 0;
+        setLoading(true)
         clientGetFeedRequest(user._id, token).then((res) => {
             if (res.status === 200) {
                 setFeedPosts(res.data.data)
@@ -49,6 +52,7 @@ const Feed = () => {
         clientGetNewsHeadlines().then((res) => {
             const filterArticles = res.data.articles.slice(0, 6);
             setNews(filterArticles)
+            setLoading(false)
         })
         gsap.to(postRef.current, { rotation: "+=360" });
     }, [showCreatePost, showComments, reload])
@@ -63,10 +67,12 @@ const Feed = () => {
             comments: foundPost[0].comments
         })
 
+        setLoading(false)
+
     }
     return (
         <div className={styles.feed}>
-            {showComments.state === false && showCreatePost === false && showRequests === false && (
+            {showComments.state === false && showCreatePost === false && showRequests === false && loading === false ? (
                 <>
 
                     <div className={styles.requestButtons}>
@@ -178,7 +184,7 @@ const Feed = () => {
                     </div>
                 </>
 
-            )}
+            ) : loading && <Loading />}
             {showComments.state === true && (
                 <div className={styles.feed_showComments}>
                     <IconButton onClick={() => setShowComments({

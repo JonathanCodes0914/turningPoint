@@ -44,9 +44,11 @@
     height: 40px;
     font-size: 20px;
     color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     font-weight: bold;
-    background-color: black;
+    background-color: darkcyan;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
 }
 
 

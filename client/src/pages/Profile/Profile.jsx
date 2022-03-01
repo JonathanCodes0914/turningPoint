@@ -10,8 +10,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import styles from './Profile.module.css';
 import ViewPost from '../../components/ViewPost/ViewPost';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PendingActionsOutlinedIcon from '@mui/icons-material/PendingActionsOutlined';
 import { clientGetProfilePostsRequest } from '../../api/post';
 import { clientCreateFriendRequest, clientRequestResult } from '../../api/request';
+import Loading from '../../components/Loading/Loading'
 import { current } from '@reduxjs/toolkit';
 import EditProfile from '../../components/EditProfile/EditProfile';
 
@@ -27,12 +29,14 @@ const Profile = () => {
     const [pageUser, setPageUser] = useState({});
     const [pageUserRequests, setPageUserRequests] = useState([])
     const [editProfile, setEditProfile] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [viewPost, setViewPost] = useState({
         state: false,
         postId: '',
     })
     const currentUserId = user._id === window.location.pathname.split('/')[2] ? user._id : window.location.pathname.split('/')[2];
     useEffect(() => {
+        setLoading(true)
         clientGetProfilePostsRequest(currentUserId, token).then((response) => {
             if (response.status === 200) {
                 const requestsIdArray = [];
@@ -40,11 +44,12 @@ const Profile = () => {
                 const requests = response.data.requests;
                 requests.forEach((request) => requestsIdArray.push(request.userA._id))
                 setPageUserRequests(requestsIdArray)
-                setPageUser(data,requests)
+                setPageUser(data, requests)
                 const filteredPosts = data.posts.filter((post) => {
                     return post.content.attachments.length !== 0
                 });
                 setMyPosts(filteredPosts)
+                setLoading(false)
             }
         })
     }, [reload])
@@ -91,7 +96,7 @@ const Profile = () => {
         })
     }
 
-    const sendUnfollowRequest = ( type, userFollowersId, userIdToDelete) => {
+    const sendUnfollowRequest = (type, userFollowersId, userIdToDelete) => {
         const data = {
             type, userFollowersId, userIdToDelete
         }
@@ -103,116 +108,117 @@ const Profile = () => {
         })
     }
 
-        const checkFollowing = (idToFind) => {
-            if (pageUser.followers?.includes(idToFind)) {
-                return <IconButton onClick={() => sendUnfollowRequest('Unfollow' , pageUser._id, user._id )}>
-                    <EditIcon />
-                    UnFollow
-                </IconButton>
-            } else if(pageUserRequests?.includes(user._id)){
-                return <IconButton >
-                    <EditIcon />
-                    Pending
-                </IconButton>
-            } else if(currentUserId === user._id) {
-                return <IconButton onClick={() => setEditProfile(true)} style={{ color: 'black', fontSize: '15px' }}>
-                    <EditIcon />
-                    Edit Profile
-                </IconButton>
-            } else {
-                return <IconButton onClick={(e) => sendFriendRequest(user._id, pageUser._id, 'Friend')} style={{ color: 'black', fontSize: '15px' }}>
-                    <EditIcon />
-                    Follow
-                </IconButton>
-            }
+    const checkFollowing = (idToFind) => {
+        if (pageUser.followers?.includes(idToFind)) {
+            return <IconButton onClick={() => sendUnfollowRequest('Unfollow', pageUser._id, user._id)} style={{ color: 'black', fontSize: '15px' }}>
+                <EditIcon />
+                UnFollow
+            </IconButton>
+        } else if (pageUserRequests?.includes(user._id)) {
+            return <IconButton >
+                <PendingActionsOutlinedIcon />
+                Pending
+            </IconButton>
+        } else if (currentUserId === user._id) {
+            return <IconButton onClick={() => setEditProfile(true)} style={{ color: 'black', fontSize: '15px' }}>
+                <EditIcon />
+                Edit Profile
+            </IconButton>
+        } else {
+            return <IconButton onClick={(e) => sendFriendRequest(user._id, pageUser._id, 'Friend')} style={{ color: 'black', fontSize: '15px' }}>
+                <EditIcon />
+                Follow
+            </IconButton>
         }
-        return (
-            <div className={styles.profile}>
-                {viewPost.state === true || editProfile === true ? <>
-                    <IconButton onClick={() => viewPost.state ? setViewPost(false) : setEditProfile(false)}>
-                        <ArrowBackIcon fontSize='large' />
-                    </IconButton>
-                    {viewPost.state === true && <ViewPost user={user} postId={viewPost.postId} token={token} />}
-                    {editProfile && <EditProfile user={user} token={token}/>}
-                </> : <>
-                    <div className={styles.profile_background}>
-                        {/* <img className={styles.profile_backgroundImg} src=' alt='profile background' /> */}
-                        <div className={styles.profile_info}>
-                            <span>
-                                <img className={styles.profile_avatarImg} alt='' src={currentUserId === window.location.pathname.split('/')[2] ? pageUser.profileImg : user.profileImg} />
-                                <p className={styles.profile_username}>@{currentUserId === window.location.pathname.split('/')[2] ? pageUser?.username : user.username}</p>
-                            </span>
-                            <span>{myPosts.length}<motion.p initial={{ x: -200 }} animate={{ fontSize: 50, x: 0, y: 0 }}>Posts</motion.p></span>
-                            <span>{currentUserId === window.location.pathname.split('/')[2] ? pageUser.followers?.length : user.followers?.length}<motion.p initial={{ x: -200 }} animate={{ fontSize: 50, x: 0, y: 0 }}>Followers</motion.p></span>
-                            <span>{currentUserId === window.location.pathname.split('/')[2] ? pageUser.following?.length : user.following?.length}<motion.p initial={{ x: -200 }} animate={{ fontSize: 50, x: 0, y: 0 }}>Following</motion.p></span>
-                        </div>
+    }
+    return (
+        <div className={styles.profile}>
+            {viewPost.state === true || editProfile === true ? <>
+                <IconButton onClick={() => viewPost.state ? setViewPost(false) : setEditProfile(false)}>
+                    <ArrowBackIcon fontSize='large' />
+                </IconButton>
+                {viewPost.state === true && <ViewPost user={user} postId={viewPost.postId} token={token} />}
+                {editProfile && <EditProfile user={user} token={token} />}
+            </> : <>
+                <div className={styles.profile_background}>
+                    {/* <img className={styles.profile_backgroundImg} src=' alt='profile background' /> */}
+                    <div className={styles.profile_info}>
+                        <span>
+                            <img className={styles.profile_avatarImg} alt='' src={currentUserId === window.location.pathname.split('/')[2] ? pageUser.profileImg : user.profileImg} />
+                            <p className={styles.profile_username}>@{currentUserId === window.location.pathname.split('/')[2] ? pageUser?.username : user.username}</p>
+                        </span>
+                        <span>{myPosts.length}<motion.p initial={{ x: -200 }} animate={{ fontSize: 50, x: 0, y: 0 }}>Posts</motion.p></span>
+                        <span>{currentUserId === window.location.pathname.split('/')[2] ? pageUser.followers?.length : user.followers?.length}<motion.p initial={{ x: -200 }} animate={{ fontSize: 50, x: 0, y: 0 }}>Followers</motion.p></span>
+                        <span>{currentUserId === window.location.pathname.split('/')[2] ? pageUser.following?.length : user.following?.length}<motion.p initial={{ x: -200 }} animate={{ fontSize: 50, x: 0, y: 0 }}>Following</motion.p></span>
                     </div>
-                    <div className={styles.profile_buttons}>
-                        {currentUserId === window.location.pathname.split('/')[2] ? checkFollowing(user._id) : <IconButton style={{ color: 'black', fontSize: '15px' }} className={styles.profile_editButton}>
-                            <EditIcon />
-                            Edit Profile
+                </div>
+                <div className={styles.profile_buttons}>
+                    {currentUserId === window.location.pathname.split('/')[2] ? checkFollowing(user._id) : <IconButton style={{ color: 'black', fontSize: '15px' }} className={styles.profile_editButton}>
+                        <EditIcon />
+                        Edit Profile
 
-                        </IconButton>}
+                    </IconButton>}
 
-                        <IconButton style={{ color: 'black', fontSize: '15px' }} className={styles.profile_shareButton}>
-                            <ShareIcon />
-                            Share Profile
+                    <IconButton style={{ color: 'black', fontSize: '15px' }} className={styles.profile_shareButton}>
+                        <ShareIcon />
+                        Share Profile
 
+                    </IconButton>
+                </div>
+
+                <div className={styles.profile_postFeatured}>
+                    <div onClick={() => setFeaturedPhotos(false)}>
+                        <IconButton style={{ color: 'black', fontSize: '15px', paddingRight: '75px' }} className={styles.profile_editButton}>
+                            <AppsIcon />
                         </IconButton>
                     </div>
-
-                    <div className={styles.profile_postFeatured}>
-                        <div onClick={() => setFeaturedPhotos(false)}>
-                            <IconButton style={{ color: 'black', fontSize: '15px', paddingRight: '75px' }} className={styles.profile_editButton}>
-                                <AppsIcon />
-                            </IconButton>
-                        </div>
-                        <div onClick={() => setFeaturedPhotos(true)}>
-                            <IconButton style={{ color: 'black', fontSize: '15px' }} className={styles.profile_shareButton}>
-                                <AccountBoxOutlinedIcon />
-                            </IconButton>
-                        </div>
+                    <div onClick={() => setFeaturedPhotos(true)}>
+                        <IconButton style={{ color: 'black', fontSize: '15px' }} className={styles.profile_shareButton}>
+                            <AccountBoxOutlinedIcon />
+                        </IconButton>
                     </div>
+                </div>
 
-                    <div className={styles.profile_Content}>
+                <div className={styles.profile_Content}>
 
-                        {featuredPhotos ? (
-                            <>
-                                <img onClick={() => {
-                                    setViewPost({
-                                        state: true
-                                    })
-                                }} src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                                <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                            </>
-                        ) : (
-                            <>
-                                {myPosts.length !== 0 && myPosts.map((post) => {
-                                    return post.content.attachments.length !== 0 ? displayAttachment(post._id, post.content.attachments) : <p>{post.content.caption}</p>
-                                })}
-
-                            </>
-                        )}
+                    {featuredPhotos ? (
+                        <>
+                            <img onClick={() => {
+                                setViewPost({
+                                    state: true
+                                })
+                            }} src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                        </>
+                    ) : (
+                        <>
+                            {loading ? <Loading />: myPosts.length !== 0 && myPosts.map((post) => {
+                                return post.content.attachments.length !== 0 ? displayAttachment(post._id, post.content.attachments) : <p>{post.content.caption}</p>
+                            })}
 
 
-                    </div>
-                </>}
+                        </>
+                    )}
 
 
-            </div>
-        )
-    }
+                </div>
+            </>}
 
-    export default Profile
+
+        </div>
+    )
+}
+
+export default Profile

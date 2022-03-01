@@ -81,7 +81,7 @@ const Header = () => {
                             <li > <IconButton><ExitToAppOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Sign Out</li>
                         </ul>
                     </> : <ul className={styles.listItemWrapper}>
-                        <li onClick={() => history.push('/')}>  <IconButton><HomeOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Home</li>
+                        <li onClick={() => history.push('/')}>  <IconButton  className={styles.listItemIcon} ><HomeOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Home</li>
                         <li onClick={() => history.push('/login')}>  <IconButton><LoginIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Login/Signup</li>
                     </ul>}
                 </div>

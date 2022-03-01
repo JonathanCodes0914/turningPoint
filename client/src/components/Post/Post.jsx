@@ -198,7 +198,8 @@ const Post = ({ story, handleShowComments , setReload}) => {
                         </div>
                         <div className={styles.feed_storyfeed_contentItemInfoDesc}>
                             <p>{likeCount} likes</p>
-                            <p>{story.user._id.username}{story.content.caption}</p>
+                            <p>{story.user._id.username}{" "}{story.content.caption}</p>
+                            <p></p>
                             <a onClick={() => handleShowComments(story._id)}>View all {story.comments.length} comments</a>
                         </div>
 

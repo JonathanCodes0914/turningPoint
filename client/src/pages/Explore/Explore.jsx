@@ -5,6 +5,7 @@ import { Avatar, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Loading from '../../components/Loading/Loading';
 import ViewPost from '../../components/ViewPost/ViewPost';
 import styles from './Explore.module.css';
 import { clientGetPexelsImages } from '../../api/pexels';
@@ -19,6 +20,7 @@ const Explore = () => {
     const [searchValue, setSearchValue] = useState('');
     const [userData, setUserData] = useState([]);
     const [pexelsPhotos, setPexelsPhotos] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [viewPhoto, setViewPhoto] = useState({
         state: false,
         photo: {}
@@ -47,8 +49,12 @@ const Explore = () => {
     }
 
     useEffect(() => {
-
-        clientGetPexelsImages().then((res) => setPexelsPhotos(res.data.photos))
+        setLoading(true)
+        clientGetPexelsImages().then((res) => {
+            setPexelsPhotos(res.data.photos)
+            setLoading(false)
+        }
+        )
         // const exploreStoriesItems = Array(8).fill({ caption: 'america the rgeatest', attachment: 'https://cdn.cheapism.com/images/011618_most_beautiful_views_in_the_world_sli.max-784x410_ZXOqfVp.jpg', username: 'cue banks' })
         // setExploreStories(exploreStoriesItems)
         // exploreStories.forEach((story, i) => {
@@ -89,11 +95,12 @@ const Explore = () => {
                         </div>
                     }) : null}
                 </div>
-                <div className={styles.explore_Tags}>
+                {loading ? <Loading /> : <div className={styles.explore_Tags}>
+
                     {pexelsPhotos.length > 0 && pexelsPhotos.map((photo) => {
                         return <img src={photo.src.medium} onClick={() => setViewPhoto({ state: true, photo: photo })} />
                     })}
-                </div>
+                </div>}
             </>}
 
         </div>

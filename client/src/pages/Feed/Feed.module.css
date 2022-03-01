@@ -90,8 +90,8 @@
 .feed_Left {
      display: none;
 }
-.feed_right {
-    
+.feed_Right {
+    padding: 25px;
 }
 /*Laptop and up*/
 @media (min-width:1025px){ 
