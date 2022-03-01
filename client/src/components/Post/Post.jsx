@@ -11,11 +11,14 @@ import styles from '../Post/Post.module.css';
 import { clientInteractPost } from '../../api/post';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteModal from '../Modal/DeleteModal';
+import firebase from 'firebase';
+import { storage } from '../../api/Firebase';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
 
-const Post = ({ story, handleShowComments , setReload}) => {
+
+const Post = ({ story, handleShowComments, setReload }) => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser)
     const token = useSelector(selectToken)
@@ -44,13 +47,22 @@ const Post = ({ story, handleShowComments , setReload}) => {
             if (window.confirm('Are you sure ?')) {
                 clientInteractPost(data, token).then((res) => {
                     if (res.status === 200) {
-                       setReload(true)
+                        let postAttachments = story.content.attachments;
 
-                       // still gotta delete attachments from fireabse
+                        for (let i = 0; i < postAttachments.length; i++) {
+                            let fileRef = storage.refFromURL(postAttachments[i].url);
+                            fileRef.delete();
+
+                            console.log('filed deleted')
+                        }
+
+                        setReload(true)
+
+                        // still gotta delete attachments from fireabse
                     }
                 })
             } else {
-                return 
+                return
             }
         } else {
             clientInteractPost(data, token).then((res) => {
@@ -197,12 +209,14 @@ const Post = ({ story, handleShowComments , setReload}) => {
                             </IconButton>
                         </div>
                         <div className={styles.feed_storyfeed_contentItemInfoDesc}>
-                            <p>{likeCount} likes</p>
+                            {likeCount > 0 && <p>{likeCount} likes</p>}
+
                             <p>{story.user._id.username}{" "}{story.content.caption}</p>
                             <p></p>
-                            <a onClick={() => handleShowComments(story._id)}>View all {story.comments.length} comments</a>
-                        </div>
+                            {story.comments.length > 0 && <a onClick={() => handleShowComments(story._id)}>View all {story.comments.length} comments</a>}
 
+                        </div>
+                        <hr />
                     </div>
                 </div>
             </>}

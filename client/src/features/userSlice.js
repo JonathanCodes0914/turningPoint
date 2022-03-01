@@ -16,11 +16,14 @@ export const userSlice = createSlice({
             state.user = null;
             state.token = null;
         },
+        updateUser: (state, action) => {
+            state.user = action.payload.user
+        },
     },
 });
 
 
-export const { login, logout} = userSlice.actions;
+export const { login, logout, updateUser} = userSlice.actions;
 
 export const selectUser = (state) => state.user.user;
 export const selectToken = (state) => state.user.token;

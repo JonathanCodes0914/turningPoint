@@ -204,9 +204,9 @@ const Profile = () => {
                         </>
                     ) : (
                         <>
-                            {loading ? <Loading />: myPosts.length !== 0 && myPosts.map((post) => {
+                            {loading ? <Loading />: myPosts.length !== 0 ? myPosts.map((post) => {
                                 return post.content.attachments.length !== 0 ? displayAttachment(post._id, post.content.attachments) : <p>{post.content.caption}</p>
-                            })}
+                            }) : <p>No Posts Yet</p>}
 
 
                         </>

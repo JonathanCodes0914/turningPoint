@@ -47,7 +47,7 @@ exports.searchUsers = async(req, res) => {
 
 exports.editProfile = async(req, res) => {
     try {
-      const {userId, firstname, lastname, username, email , password} = req.body;
+      const {userId, firstname, lastname, username, email , password, profileImg} = req.body;
 
       let usernameexists = await User.findOne({ username })
 
@@ -55,9 +55,16 @@ exports.editProfile = async(req, res) => {
       if (usernameexists) return res.status(400).send('User name already exists')
 
 
-      await User.findByIdAndUpdate(userId, {firstname:firstname, lastname: lastname, username: username, email: email})
+     let newUser = await User.findByIdAndUpdate(userId, {firstname:firstname, lastname: lastname, username: username, email: email, profileImg: profileImg}, {new:true})
+
+     const {_id,  role,  followers, following, posts} = newUser
+     const returnUser = {
+        _id, firstname, lastname, email, role, username, followers, following, posts, profileImg
+     }
       return res.status(200).json({
-          msg:'User updated'
+          msg:'User updated',
+          returnUser
+          
       })
     } catch (err) {
         return res.status(404).send(err)

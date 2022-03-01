@@ -52,7 +52,7 @@ const CreatePost = ({setShowCreatePost}) => {
       const newFiles = [];
 
       await utils.asyncForEach(limitedFiles, async (file) => {
-        const ref = firebase.storage().ref(`uploads/${user._id}/${Date.now()}`);
+        const ref = firebase.storage().ref(`uploads/posts/${user._id}/${Date.now()}`);
         console.log(file)
         const snapshot = await ref.put(file);
         const url = await snapshot.ref.getDownloadURL();

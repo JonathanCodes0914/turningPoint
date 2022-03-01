@@ -30,15 +30,19 @@
 }
 
 .exploreUser {
-    color: white;
+    color: black;
     display: flex;
     width: 100%;
     border-radius: 10px;
-    justify-content: stretch
+    justify-content: stretch;
+    padding-left: 20px;
+    
     
 }
 .exploreUser > p {
     padding-left: 60px;
+    font-weight: bold;
+    padding-top: 10px;
 
 }
 .exploreUser:hover {
