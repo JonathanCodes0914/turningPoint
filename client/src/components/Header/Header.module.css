@@ -16,6 +16,15 @@ z-index: 2;
     place-items: center;
 }
 
+.headerLeft > h1 {
+    font-size: 30px;
+    background: -webkit-linear-gradient(#008b8b, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 20px;
+
+}
+
 .headerRight {
     flex: 0.5;
    display: grid;

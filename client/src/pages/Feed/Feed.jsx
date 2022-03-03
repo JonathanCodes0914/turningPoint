@@ -55,7 +55,7 @@ const Feed = () => {
             setLoading(false)
         })
         gsap.to(postRef.current, { rotation: "+=360" });
-    }, [showCreatePost, showComments, reload])
+    }, [showCreatePost, showComments, reload, token, user._id])
 
     const handleShowComments = (postId) => {
         //filter post by id and extract comments from it after populated

@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, logout } from '../../features/userSlice';
 import { Link, useHistory } from 'react-router-dom';
 import { clientLogoutRequest } from '../../api/auth';
+import logo from '../Images/socialspacelogo.png';
 import { gsap } from "gsap";
 
 const Header = () => {
@@ -59,7 +60,8 @@ const Header = () => {
                 <div className={styles.blur}></div>
             </div>}
             <div className={styles.headerLeft}>
-                {/* <Avatar /> */}
+                {/* <img src={logo} width='400px' height='100px' alt='web logo'/> */}
+                <h1>Social Space</h1>
             </div>
             <div className={styles.headerRight}>
                 {menuActive === false && <div className={styles.menuIcon}>

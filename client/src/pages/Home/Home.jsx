@@ -16,23 +16,24 @@ const Home = () => {
             </video>
 
             
-            {/* <div>NEVER STOP EXPLORING THE UNIVERSE</div> */}
+            <h2>Social Space</h2>
+            
 
           </div>
         </Carousel>
 
         {/* <div className={styles.overlay}></div> */}
         <div className={styles.text}>
-          {/* 
-             <AnimatePresence>
-             <motion.h3 initial={{x: -200}} animate={{ fontSize: 50, color: 'white', x: 0, y: 0}} exit={{ opacity: 0.5}} >
+          
+{/*             
+             <h3  >
                Never Stop Exploring
-             </motion.h3>
-             </AnimatePresence>
-             <motion.p initial={{x: -200}} animate={{ fontSize: 50, color: 'white', x: 0, y: 0}}>
+             </h3>
+             
+             <p>
              Lets Explore The Universe One Picture At A Time.
-             </motion.p>
-            <a href='/content'><motion.button initial={{x: -200}} animate={{  color: 'white', x: 0, y: 0, }}><button >Explore</button></motion.button></a> */}
+             </p>
+            <a href='/content'><button initial={{x: -200}} animate={{  color: 'white', x: 0, y: 0, }}><button >Explore</button></button></a> */}
         </div>
       </div>
       {/* <div className={styles.newsletter}>
