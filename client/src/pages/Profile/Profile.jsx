@@ -16,6 +16,7 @@ import { clientCreateFriendRequest, clientRequestResult } from '../../api/reques
 import Loading from '../../components/Loading/Loading'
 import { current } from '@reduxjs/toolkit';
 import EditProfile from '../../components/EditProfile/EditProfile';
+import {toast} from 'react-toastify';
 
 
 
@@ -87,7 +88,7 @@ const Profile = () => {
         const data = { userA, userB, type }
         clientCreateFriendRequest(data, token).then((res) => {
             if (res.status === 200) {
-                alert("request succesfful")
+                toast('Friend Request Sent')
                 setReload(true)
             }
         })
@@ -99,7 +100,7 @@ const Profile = () => {
         }
         clientRequestResult(data, token).then((res) => {
             if (res.status === 200) {
-                alert('User Unfollowed')
+                toast('User Unfollowed')
                 setReload(true)
             }
         })
@@ -112,7 +113,7 @@ const Profile = () => {
                 UnFollow
             </IconButton>
         } else if (pageUserRequests?.includes(user._id)) {
-            return <IconButton >
+            return <IconButton style={{ color: 'black', fontSize: '15px' }}>
                 <PendingActionsOutlinedIcon />
                 Pending
             </IconButton>

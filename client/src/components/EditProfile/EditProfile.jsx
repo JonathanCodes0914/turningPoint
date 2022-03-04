@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { clientEditProfileRequest } from '../../api/user';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {updateUser } from '../../features/userSlice';
 import firebase from 'firebase';
 import styles from '../EditProfile/EditProfile.module.css';
+import { toast } from 'react-toastify';
 
 
 
@@ -63,7 +64,7 @@ const EditProfile = ({ user, token }) => {
         dispatch(updateUser({
           user: res.data.returnUser
         }))
-        alert("profile updated")
+        toast('Profile Updated')
         history.push(`/feed`)
       }
     })

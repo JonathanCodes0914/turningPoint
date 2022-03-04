@@ -10,12 +10,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import styles from '../Post/Post.module.css';
 import { clientInteractPost } from '../../api/post';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import DeleteModal from '../Modal/DeleteModal';
-import firebase from 'firebase';
 import { storage } from '../../api/Firebase';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import ImageGallery from 'react-image-gallery';
+import { toast } from 'react-toastify';
 
 
 const Post = ({ story, handleShowComments, setReload }) => {
@@ -35,10 +33,10 @@ const Post = ({ story, handleShowComments, setReload }) => {
         if (idExist) {
             setPostLiked(true)
         }
-        
+
         setAttachments(story.content.attachments)
     }, [])
-    console.log(story)
+  
     const handlePostInteraction = (postId, userId, type) => {
         const data = { postId, userId, type };
 
@@ -70,11 +68,11 @@ const Post = ({ story, handleShowComments, setReload }) => {
                     if (type === 'Like') {
                         setPostLiked(true)
                         setLikeCount(likeCount + 1)
-                        alert("post liked")
+                        toast('Post Liked')
                     } else if (type === 'Unlike') {
                         setPostLiked(false)
                         setLikeCount(likeCount - 1)
-                        alert("post unliked")
+                        toast('Post Unliked')
                     }
 
                 }
@@ -83,46 +81,7 @@ const Post = ({ story, handleShowComments, setReload }) => {
 
     }
 
-    // const handleDisplayAttachments = (attachments) => {
-    //     if (attachments.length === 1 && attachments[0].contentType === 'image') {
-    //         return <div className={styles.slider}>
-    //             <img src={attachments[0].url} alt='Content' />
-    //         </div>
-    //     } else if (attachments.length === 1 && attachments[0].contentType === 'video') {
-    //         return <div className={styles.slider}>
-    //             <video muted autoPlay>
-    //                 <source src={attachments[0].url} />
-    //             </video>
-    //         </div>
-    //     } else if (attachments.length === 1 && attachments[0].contentType === 'audio') {
-    //         return <div className={styles.slider}>
-    //             <audio>
-    //                 <source src={attachments[0].url} />
-    //             </audio>
-    //         </div>
-    //     } else if (attachments.length > 1) {
-    //         console.log(attachments.length)
-    //         for (let i = 0; i < attachments.length; i++) {
-    //             if (attachments[i].contentType === 'image') {
-    //                 return <div className={styles.slider}>
-    //                     <img src={attachments[i].url} alt='Content' />
-    //                 </div>
-    //             } else if (attachments[i].contentType === 'video') {
-    //                 return <div className={styles.slider}>
-    //                     <video>
-    //                         <source src={attachments[i].url} />
-    //                     </video>
-    //                 </div>
-    //             } else if (attachments[i].contentType === 'audio') {
-    //                 return <div className={styles.slider}>
-    //                     <audio>
-    //                         <source src={attachments[i].url} />
-    //                     </audio>
-    //                 </div>
-    //             }
-    //         }
-    //     }
-    // };
+
 
     const setAttachments = (attachments) => {
         if (attachments.length === 1 && attachments[0].contentType === 'image') {
@@ -185,7 +144,7 @@ const Post = ({ story, handleShowComments, setReload }) => {
                                     <source src={vid.url} type="video/mp4" />
                                 </video>
                             </div>
-                        }) }
+                        })}
                         {audios.length > 0 && audios.map((audio) => {
                             return <div className={styles.slider}>
                                 <img className={styles.sliderAttachment} src='https://4.bp.blogspot.com/-uhjF2kC3tFc/U_r3myvwzHI/AAAAAAAACiw/tPQ2XOXFYKY/s1600/Circles-3.gif' />
@@ -196,8 +155,8 @@ const Post = ({ story, handleShowComments, setReload }) => {
                         })}
                     </Carousel>
 
-            
-                
+
+
                     <div className={styles.feed_contentItemInfo}>
                         <div className={styles.feed_contentItemInfoButtons}>
                             {postLiked ? <IconButton onClick={() => handlePostInteraction(story._id, user._id, 'Unlike')}>

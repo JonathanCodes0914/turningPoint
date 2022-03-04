@@ -55,8 +55,14 @@ const CreatePost = ({setShowCreatePost, setReload}) => {
 
   const createPost = async (e) => {
     e.preventDefault();
-    setLoading(true);
     const limitedFiles = [...files[0], ...files[1], ...files[2]]
+    if(caption.trim().length === 0 || limitedFiles.length > 3 || limitedFiles.length === 0) {
+      toast.error('Caption may not be empty and max files 3')
+      setLoading(false)
+      return
+    }
+    setLoading(true);
+   
 
     console.log('limited',limitedFiles)
     if (limitedFiles.length <= 3) {
@@ -85,6 +91,9 @@ const CreatePost = ({setShowCreatePost, setReload}) => {
             setLoading(false)
             setShowCreatePost(false)
             setReload(true)
+            toast('Post Creation Successful')
+          } else {
+            toast('Something Went Wrong')
           }
         })
     }

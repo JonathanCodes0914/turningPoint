@@ -13,6 +13,8 @@ import Explore from './pages/Explore/Explore';
 import { PrivateRoute } from './components/PrivateRoute';
 
 
+
+
 function App () {
   return (
     <div className={styles.app}>
@@ -29,6 +31,7 @@ function App () {
         <PrivateRoute path='/content/:id' exact component={SingleVideo}/>
       </Switch>
       </Router>
+      
       <Footer />
     </div>
   );

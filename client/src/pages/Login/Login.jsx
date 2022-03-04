@@ -6,6 +6,7 @@ import { clientLoginRequest, clientRegisterRequest } from '../../api/auth';
 import { useHistory, } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FormLabel';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const history = useHistory();
@@ -56,8 +57,8 @@ const Login = () => {
               }
             
             }))
-      
             history.push('/feed')
+            toast('Welcome To Social Space!');
           }
         }
     } else if(registerValues.email.length  > 0 && registerValues.password.length > 0){
@@ -81,6 +82,9 @@ const Login = () => {
         }))
   
         history.push('/feed')
+        toast('Welcome Back!');
+      } else if(response.status === 400) {
+        toast.error('Email or Password Incorrect') 
       }
     }
   }

@@ -5,6 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SendIcon from '@mui/icons-material/Send';
 import { clientInteractPost } from '../../api/post';
 import CommentSettings from '../CommentSettings/CommentSettings';
+import {toast} from 'react-toastify';
 const Comments = ({ comments, postId, userId, token , setLoading, setReload}) => {
     const [commentValue, setCommentValue] = useState('');
     const [postComments, setPostComments] = useState(comments);
@@ -16,17 +17,23 @@ const Comments = ({ comments, postId, userId, token , setLoading, setReload}) =>
 
 
     useEffect(() => {
-        setLoading(false)
+    
     }, [])
     const handleSubmitComment = (e, type) => {
         e.preventDefault();
+
+        if(commentValue.trim().length === 0) {
+            toast.error('Please input a comment')
+            return
+        }
         const data = {
             postId, userId, commentValue, type
         }
         clientInteractPost(data, token).then((res) => {
             if (res.status === 200) {
                 setReload(true)
-                alert('comment created')
+                toast('Comment Created')
+               
                 
             }
         })
