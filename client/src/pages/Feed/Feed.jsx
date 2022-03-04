@@ -52,10 +52,12 @@ const Feed = () => {
         clientGetNewsHeadlines().then((res) => {
             const filterArticles = res.data.articles.slice(0, 6);
             setNews(filterArticles)
-            setLoading(false)
+            
         })
-        gsap.to(postRef.current, { rotation: "+=360" });
-    }, [showCreatePost, showComments, reload, token, user._id])
+        setLoading(false)
+        setReload(false)
+      
+    }, [reload, token, user._id])
 
     const handleShowComments = (postId) => {
         //filter post by id and extract comments from it after populated
@@ -194,7 +196,7 @@ const Feed = () => {
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
                   
-                   <Comments token={token} userId={user._id} postId={showComments.postId} comments={showComments.comments}/>
+                   <Comments token={token} userId={user._id} postId={showComments.postId} comments={showComments.comments} setLoading={setLoading} setReload={setReload}/>
                 </div>
             )}
 
@@ -204,7 +206,7 @@ const Feed = () => {
                     <IconButton onClick={() => setShowCreatePost(false)}>
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
-                    <CreatePost setShowCreatePost={setShowCreatePost}/>
+                    <CreatePost setShowCreatePost={setShowCreatePost} setReload={setReload}/>
 
                 </div>
             )}

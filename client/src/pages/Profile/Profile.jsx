@@ -53,7 +53,7 @@ const Profile = () => {
             }
         })
     }, [reload])
-
+    console.log('my posts', myPosts)
     const displayAttachment = (postId, attachments) => {
         if (attachments[0].contentType === 'image') {
             return <img onClick={(e) => {
@@ -64,27 +64,24 @@ const Profile = () => {
             }} src={attachments[0].url} alt='label' />
         }
         if (attachments[0].contentType === 'video') {
-            return <video onClick={(e) => {
+            return <img src='https://girishboke.github.io/day01/assets/media/video-poster.jpg' onClick={(e) => {
                 setViewPost({
                     state: true,
                     postId: postId,
                 })
-            }}>
-                <source src={attachments[0].url} type="video/mp4" />
-            </video>
+            }} />
         }
         if (attachments[0].contentType === 'audio') {
-            return <audio onClick={(e) => {
+            return <img src='https://static.displate.com/280x392/displate/2020-08-06/affd1a71295669950308eaa30e6c5473_6099a3a9daf8faaa5e63ada15b63731b.jpg' onClick={(e) => {
                 setViewPost({
                     state: true,
                     postId: postId,
                 })
-            }}>
-                <source src={'https://4.bp.blogspot.com/-uhjF2kC3tFc/U_r3myvwzHI/AAAAAAAACiw/tPQ2XOXFYKY/s1600/Circles-3.gif'} />
-            </audio>
+            }} />
+
+
         }
-        return null
-    }
+    };
 
     const sendFriendRequest = (userA, userB, type) => {
         const data = { userA, userB, type }
@@ -204,7 +201,7 @@ const Profile = () => {
                         </>
                     ) : (
                         <>
-                            {loading ? <Loading />: myPosts.length !== 0 ? myPosts.map((post) => {
+                            {loading ? <Loading /> : myPosts.length !== 0 ? myPosts.map((post) => {
                                 return post.content.attachments.length !== 0 ? displayAttachment(post._id, post.content.attachments) : <p>{post.content.caption}</p>
                             }) : <p>No Posts Yet</p>}
 

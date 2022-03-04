@@ -5,7 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SendIcon from '@mui/icons-material/Send';
 import { clientInteractPost } from '../../api/post';
 import CommentSettings from '../CommentSettings/CommentSettings';
-const Comments = ({ comments, postId, userId, token }) => {
+const Comments = ({ comments, postId, userId, token , setLoading, setReload}) => {
     const [commentValue, setCommentValue] = useState('');
     const [postComments, setPostComments] = useState(comments);
     const [viewCommentSettings, setViewCommentSettings] = useState({
@@ -14,6 +14,10 @@ const Comments = ({ comments, postId, userId, token }) => {
     });
     const feedStories = Array(8).fill({ caption: 'america the rgeatest', attachment: 'https://cdn.cheapism.com/images/011618_most_beautiful_views_in_the_world_sli.max-784x410_ZXOqfVp.jpg', username: 'cue banks' })
 
+
+    useEffect(() => {
+        setLoading(false)
+    }, [])
     const handleSubmitComment = (e, type) => {
         e.preventDefault();
         const data = {
@@ -21,6 +25,7 @@ const Comments = ({ comments, postId, userId, token }) => {
         }
         clientInteractPost(data, token).then((res) => {
             if (res.status === 200) {
+                setReload(true)
                 alert('comment created')
                 
             }
@@ -40,6 +45,7 @@ const Comments = ({ comments, postId, userId, token }) => {
                     let filterComments = postComments.filter(comment => comment._id !== viewCommentSettings.commentId);
                     console.log(filterComments)
                     setPostComments(filterComments)
+                    setReload(true)
                     alert('Comment Deleted')
                 }
             })

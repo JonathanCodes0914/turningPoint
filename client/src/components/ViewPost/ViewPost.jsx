@@ -30,30 +30,50 @@ const ViewPost = ({ postId, token , user}) => {
             setLikeCount(res.data.data[0].likes.length)
             // grab attachments and call setattachments
             const attachments = res.data.data[0].content.attachments;
-            setAttachments(attachments)
-            
+            attachments.forEach((attachment) => {
+                if(attachment.contentType === 'image') {
+                    setImages(oldArray => [ ...oldArray, attachment])
+                }
+                if(attachment.contentType === 'video') {
+                    setVideos(oldArray => [ ...oldArray, attachment])
+                }
+                if(attachment.contentType === 'audio') {
+                    setAudios(oldArray => [ ...oldArray, attachment])
+                }
+
+
+            })
+            console.log(res.data.data[0])
             const idExist = res.data.data[0].likes?.includes(user?._id)
             if (idExist) {
                 setPostLiked(true)
             }
-    
-        })
-    }, [likeCount, postId, token, user])
-
-    const setAttachments = (attachments) => {
-
-        for (let i = 0; i < attachments.length; i++) {
-            if (attachments[i].contentType === 'image') {
-                setImages(oldArray => [attachments[i], ...oldArray])
-            }else  if (attachments[i].contentType === 'video') {
-                setVideos(oldArray => [attachments[i], ...oldArray])
-
-            }else if (attachments[i].contentType === 'audio') {
-                setAudios(oldArray => [attachments[i], ...oldArray])
+            return () => {
+                setImages([])
+                setVideos([])
+                setAudios([])
             }
-        }
-    }
+        })
+    }, [])
+console.log(currentPost)
+console.log('images', images)
+console.log('video', videos)
+console.log('audios', audios)
 
+// const setAttachments = (attachments) => {
+//     console.log(attachments)
+//     attachments.forEach((attachment) => {
+//         if(attachment.contentType === 'image') {
+//             setImages(oldArray => [attachment, ...oldArray])
+//         }
+//         if(attachment.contentType === 'video') {
+//             setVideos(oldArray => [attachment, ...oldArray])
+//         }
+//         if(attachment.contentType === 'audio') {
+//             setAudios(oldArray => [attachment, ...oldArray])
+//         }
+//     })
+// }
     
     const handlePostInteraction = (postId, userId, type) => {
         const data = { postId, userId, type };
@@ -72,7 +92,8 @@ const ViewPost = ({ postId, token , user}) => {
             }
         })
     }
-
+    const postAttachments = [...images, ...videos, ...audios];
+    
     return <div className={styles.viewpost}>
         {viewComments === true ?   <Comments token={token} userId={user._id} postId={postId} comments={currentPost?.comments} /> : 
         <>
@@ -82,26 +103,27 @@ const ViewPost = ({ postId, token , user}) => {
         </span>
         <div className={styles.blur}></div>
         <div className={styles.viewpost_contentItem}>
-            <Carousel swipeable autoplay autoFocus showStatus={false} showThumbs={false} transitionTime={700} showIndicators={false} >
-            {images.length > 0 ? images.map((img) => {
-                return <div className={styles.slider}>
+            <Carousel swipeable={postAttachments.length > 1 ? true : false} autoplay autoFocus showStatus={false} showThumbs={false} transitionTime={700} showIndicators={false} showArrows={postAttachments.length === 1 ? false : true}>
+            {images.length > 0 && images.map((img, i) => {
+                return <div className={styles.slider} key={i}>
                 <img src={img.url} alt='label' width='100px' height='500px' />
             </div>
-            }) : null}
-              {videos.length > 0 ? videos.map((vid) => {
-               return <div className={styles.slider}>
+            })}
+              {videos.length > 0 && videos.map((vid, i) => {
+               return <div className={styles.slider} key={i}>
                   <video muted autoPlay playsInline loop width='100px' height='300px'>
                         <source src={vid.url} type="video/mp4" />
                     </video>
             </div>
-            }): null}
-              {audios.length > 0 ? audios.map((audio) => {
-               return <div className={styles.slider}>
-                <audio>
+            })}
+              {audios.length > 0 && audios.map((audio, i) => {
+               return <div className={styles.slider} key={i}>
+                   <img className={styles.sliderAttachment} src='https://static.displate.com/280x392/displate/2020-08-06/affd1a71295669950308eaa30e6c5473_6099a3a9daf8faaa5e63ada15b63731b.jpg' alt='slider audio' />
+                <audio  controls autoplay>
                         <source src={audio.url} />
                     </audio>
             </div>
-            }): null}
+            })}
             </Carousel>
 
 

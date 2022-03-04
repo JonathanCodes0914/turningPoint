@@ -65,8 +65,8 @@ const Header = () => {
             </div>
             <div className={styles.headerRight}>
                 {menuActive === false && <div className={styles.menuIcon}>
-                    <IconButton   onClick={() => setMenuActive(true)}>
-                    <MenuIcon style={{color: 'darkcyan'}} />
+                    <IconButton  onClick={() => setMenuActive(true)}>
+                    <MenuIcon fontSize='large' style={{color: 'darkcyan'}} />
                 </IconButton>
                     </div>}
                 <div className={styles.headerRightDesktop}>

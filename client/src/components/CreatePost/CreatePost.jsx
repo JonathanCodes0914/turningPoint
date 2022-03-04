@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './CreatePost.module.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import Loading from '../Loading/Loading';
 
 
-const CreatePost = ({setShowCreatePost}) => {
+const CreatePost = ({setShowCreatePost, setReload}) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const token = useSelector(selectToken);
@@ -42,6 +42,17 @@ const CreatePost = ({setShowCreatePost}) => {
     },
   };
 
+  useEffect(() => {
+
+
+    return () => {
+        setFiles([] , [], [])
+
+        setCaption('')
+    }
+
+  }, [])
+
   const createPost = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -49,7 +60,7 @@ const CreatePost = ({setShowCreatePost}) => {
 
     console.log('limited',limitedFiles)
     if (limitedFiles.length <= 3) {
-      const newFiles = [];
+      let  newFiles = [];
 
       await utils.asyncForEach(limitedFiles, async (file) => {
         const ref = firebase.storage().ref(`uploads/posts/${user._id}/${Date.now()}`);
@@ -73,7 +84,7 @@ const CreatePost = ({setShowCreatePost}) => {
           if(response.status === 200) {
             setLoading(false)
             setShowCreatePost(false)
-            
+            setReload(true)
           }
         })
     }

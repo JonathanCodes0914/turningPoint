@@ -15,7 +15,7 @@ import firebase from 'firebase';
 import { storage } from '../../api/Firebase';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-
+import ImageGallery from 'react-image-gallery';
 
 
 const Post = ({ story, handleShowComments, setReload }) => {
@@ -35,7 +35,7 @@ const Post = ({ story, handleShowComments, setReload }) => {
         if (idExist) {
             setPostLiked(true)
         }
-
+        
         setAttachments(story.content.attachments)
     }, [])
     console.log(story)
@@ -147,6 +147,7 @@ const Post = ({ story, handleShowComments, setReload }) => {
 
     }
 
+    const allAttachments = [...images, ...videos, ...audios];
     return (
         <div className={styles.post}>
             {showPostSettings === true ? <div className={styles.postSettings}>
@@ -171,29 +172,32 @@ const Post = ({ story, handleShowComments, setReload }) => {
                 <div className={styles.feed_contentItem}>
                     {/* <img src={story.content.attachments[0].url} alt='feed content' /> */}
 
-                    <Carousel swipeable autoplay autoFocus showStatus={false} showThumbs={false} transitionTime={700} showIndicators={false} >
+                    <Carousel swipeable={allAttachments.length > 1 ? true : false} autoplay autoFocus showStatus={false} showThumbs={false} transitionTime={700} showIndicators={false} showArrows={allAttachments.length === 1 ? false : true} >
 
-                        {images.length > 0 ? images.map((img) => {
+                        {images.length > 0 && images.map((img) => {
                             return <div className={styles.slider}>
                                 <img src={img.url} alt='label' width='100px' height='500px' />
                             </div>
-                        }) : null}
-                        {videos.length > 0 ? videos.map((vid) => {
+                        })}
+                        {videos.length > 0 && videos.map((vid) => {
                             return <div className={styles.slider}>
-                                <video className={styles.sliderAttachment} muted autoPlay playsInline loop width='100px' height='500px'>
+                                <video className={styles.sliderAttachment} muted autoPlay playsInline loop width='400px' height='500px'>
                                     <source src={vid.url} type="video/mp4" />
                                 </video>
                             </div>
-                        }) : null}
-                        {audios.length > 0 ? audios.map((audio) => {
+                        }) }
+                        {audios.length > 0 && audios.map((audio) => {
                             return <div className={styles.slider}>
                                 <img className={styles.sliderAttachment} src='https://4.bp.blogspot.com/-uhjF2kC3tFc/U_r3myvwzHI/AAAAAAAACiw/tPQ2XOXFYKY/s1600/Circles-3.gif' />
                                 <audio controls autoplay>
                                     <source src={audio.url} type='audio/mp3' />
                                 </audio>
                             </div>
-                        }) : null}
+                        })}
                     </Carousel>
+
+            
+                
                     <div className={styles.feed_contentItemInfo}>
                         <div className={styles.feed_contentItemInfoButtons}>
                             {postLiked ? <IconButton onClick={() => handlePostInteraction(story._id, user._id, 'Unlike')}>
