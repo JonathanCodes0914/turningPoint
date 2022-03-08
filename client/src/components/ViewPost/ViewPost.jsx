@@ -60,20 +60,7 @@ console.log('images', images)
 console.log('video', videos)
 console.log('audios', audios)
 
-// const setAttachments = (attachments) => {
-//     console.log(attachments)
-//     attachments.forEach((attachment) => {
-//         if(attachment.contentType === 'image') {
-//             setImages(oldArray => [attachment, ...oldArray])
-//         }
-//         if(attachment.contentType === 'video') {
-//             setVideos(oldArray => [attachment, ...oldArray])
-//         }
-//         if(attachment.contentType === 'audio') {
-//             setAudios(oldArray => [attachment, ...oldArray])
-//         }
-//     })
-// }
+
     
     const handlePostInteraction = (postId, userId, type) => {
         const data = { postId, userId, type };
@@ -111,7 +98,7 @@ console.log('audios', audios)
             })}
               {videos.length > 0 && videos.map((vid, i) => {
                return <div className={styles.slider} key={i}>
-                  <video muted autoPlay playsInline loop width='100px' height='300px'>
+                  <video muted autoPlay playsInline loop >
                         <source src={vid.url} type="video/mp4" />
                     </video>
             </div>

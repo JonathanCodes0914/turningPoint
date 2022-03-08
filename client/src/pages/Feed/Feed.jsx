@@ -59,6 +59,30 @@ const Feed = () => {
       
     }, [reload, token, user._id])
 
+    const setReloadType = (type, postId) => {
+        if(type === 'comment') {
+           
+            clientGetFeedRequest(user._id, token).then((res) => {
+                if (res.status === 200) {
+                    setFeedPosts(res.data.data)
+                    const newComments = res.data.data.filter((post) => post._id === postId)
+                    
+                    setShowComments({
+                        state: false
+                    })
+                    setShowComments({
+                        state: true,
+                        postId: postId,
+                        comments: newComments[0].comments
+                    })
+                    
+                
+                }
+            })
+        
+        }
+    }
+
     const handleShowComments = (postId) => {
         //filter post by id and extract comments from it after populated
         const foundPost = feedPosts.filter((post) => post._id === postId)
@@ -196,7 +220,7 @@ const Feed = () => {
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
                   
-                   <Comments token={token} userId={user._id} postId={showComments.postId} comments={showComments.comments} setLoading={setLoading} setReload={setReload}/>
+                   <Comments token={token} userId={user._id} postId={showComments.postId} comments={showComments.comments} setLoading={setLoading} setReload={setReload} setReloadType={setReloadType}/>
                 </div>
             )}
 

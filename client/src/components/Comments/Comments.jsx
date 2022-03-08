@@ -1,14 +1,14 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../Comments/Comments.module.css';
 import { Avatar, Icon, IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SendIcon from '@mui/icons-material/Send';
 import { clientInteractPost } from '../../api/post';
 import CommentSettings from '../CommentSettings/CommentSettings';
-import {toast} from 'react-toastify';
-const Comments = ({ comments, postId, userId, token , setLoading, setReload}) => {
+import { toast } from 'react-toastify';
+const Comments = ({ comments, postId, userId, token, setLoading, setReloadType, setReload }) => {
     const [commentValue, setCommentValue] = useState('');
-    const [postComments, setPostComments] = useState(comments);
+    const [postComments, setPostComments] = useState([]);
     const [viewCommentSettings, setViewCommentSettings] = useState({
         state: false,
         commentId: ''
@@ -17,12 +17,19 @@ const Comments = ({ comments, postId, userId, token , setLoading, setReload}) =>
 
 
     useEffect(() => {
-    
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+        const sortedComments = comments.sort((a, b) => {
+            return a.createdAt.localeCompare(b.createdAt)
+
+        })
+console.log('sorted comments', sortedComments)
+        setPostComments(comments.reverse())
     }, [])
+
     const handleSubmitComment = (e, type) => {
         e.preventDefault();
 
-        if(commentValue.trim().length === 0) {
+        if (commentValue.trim().length === 0) {
             toast.error('Please input a comment')
             return
         }
@@ -31,24 +38,25 @@ const Comments = ({ comments, postId, userId, token , setLoading, setReload}) =>
         }
         clientInteractPost(data, token).then((res) => {
             if (res.status === 200) {
-                setReload(true)
+                setReloadType('comment', postId)
+                setCommentValue('')
                 toast('Comment Created')
-               
-                
+
+
             }
         })
     }
 
     const handleDeleteComment = () => {
-        if(window.confirm('Want To Delete This Comment')) {
+        if (window.confirm('Want To Delete This Comment')) {
             const data = {
                 type: 'Comment Delete',
-             commentId: viewCommentSettings.commentId,
+                commentId: viewCommentSettings.commentId,
                 postId
             }
             //make call
             clientInteractPost(data, token).then((res) => {
-                if(res.status === 200) {
+                if (res.status === 200) {
                     let filterComments = postComments.filter(comment => comment._id !== viewCommentSettings.commentId);
                     console.log(filterComments)
                     setPostComments(filterComments)
@@ -56,10 +64,10 @@ const Comments = ({ comments, postId, userId, token , setLoading, setReload}) =>
                     alert('Comment Deleted')
                 }
             })
-        } 
+        }
     }
 
-   
+
     console.log(commentValue, postComments)
     return (
         <div className={styles.comments}>
@@ -70,7 +78,7 @@ const Comments = ({ comments, postId, userId, token , setLoading, setReload}) =>
                         <Avatar src={comment.user.profileImg} />
                         <small>{comment.user.username}</small>
                     </span>
-                    <small>{comment.content.body}</small>
+                    <p>{comment.content.body}</p>
                     <span>
                         {comment.user._id === userId && <IconButton onClick={() => setViewCommentSettings({
                             state: true,
@@ -80,7 +88,7 @@ const Comments = ({ comments, postId, userId, token , setLoading, setReload}) =>
                         </IconButton>}
 
                     </span>
-
+                       
                 </div>
             )) : <center><p>No Comments Yet</p></center>}
             <div className={styles.commentsBarWrapper}>

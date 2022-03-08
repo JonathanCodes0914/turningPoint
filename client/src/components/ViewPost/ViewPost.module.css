@@ -55,3 +55,14 @@ height: 60vh;
     word-break: break-word;
     
 }
+
+.slider > video {
+    height: 500px;
+    width: 100%;
+}
+
+
+.slider > img {
+    height: 500px;
+    width: 100%;
+}
