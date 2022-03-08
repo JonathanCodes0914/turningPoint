@@ -18,11 +18,6 @@ const Comments = ({ comments, postId, userId, token, setLoading, setReloadType, 
 
     useEffect(() => {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-        const sortedComments = comments.sort((a, b) => {
-            return a.createdAt.localeCompare(b.createdAt)
-
-        })
-console.log('sorted comments', sortedComments)
         setPostComments(comments.reverse())
     }, [])
 
@@ -57,10 +52,7 @@ console.log('sorted comments', sortedComments)
             //make call
             clientInteractPost(data, token).then((res) => {
                 if (res.status === 200) {
-                    let filterComments = postComments.filter(comment => comment._id !== viewCommentSettings.commentId);
-                    console.log(filterComments)
-                    setPostComments(filterComments)
-                    setReload(true)
+                    setReloadType('comment', postId)
                     alert('Comment Deleted')
                 }
             })

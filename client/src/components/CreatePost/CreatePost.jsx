@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import Loading from '../Loading/Loading';
 
 
-const CreatePost = ({setShowCreatePost, setReload}) => {
+const CreatePost = ({setShowCreatePost, setReloadType}) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const token = useSelector(selectToken);
@@ -90,7 +90,7 @@ const CreatePost = ({setShowCreatePost, setReload}) => {
           if(response.status === 200) {
             setLoading(false)
             setShowCreatePost(false)
-            setReload(true)
+            history.push(`/profile/${user._id}`)
             toast('Post Creation Successful')
           } else {
             toast('Something Went Wrong')

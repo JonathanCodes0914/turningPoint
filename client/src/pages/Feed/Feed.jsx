@@ -55,7 +55,7 @@ const Feed = () => {
             
         })
         setLoading(false)
-        setReload(false)
+      
       
     }, [reload, token, user._id])
 
@@ -80,6 +80,12 @@ const Feed = () => {
                 }
             })
         
+        } else if(type === 'new post') {
+            clientGetFeedRequest(user._id, token).then((res) => {
+                if (res.status === 200) {
+                    setFeedPosts(res.data.data)
+                }
+            })
         }
     }
 
@@ -230,7 +236,7 @@ const Feed = () => {
                     <IconButton onClick={() => setShowCreatePost(false)}>
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
-                    <CreatePost setShowCreatePost={setShowCreatePost} setReload={setReload}/>
+                    <CreatePost setShowCreatePost={setShowCreatePost} setReloadType={setReloadType}/>
 
                 </div>
             )}

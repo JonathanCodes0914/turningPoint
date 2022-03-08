@@ -76,7 +76,7 @@ const Header = () => {
                             <li onClick={() => history.push('/')}>  <IconButton><HomeOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Home</li>
                             <li onClick={() => history.push(`/feed`)}> <IconButton><DynamicFeedOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Feed</li>
 
-                            <li onClick={() => history.push(`/content`)}> <IconButton><FeaturedVideoOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Content</li>
+                            {/* <li onClick={() => history.push(`/content`)}> <IconButton><FeaturedVideoOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Content</li> */}
                             <li onClick={() => history.push(`/explore`)}> <IconButton><TravelExploreOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Explore</li>
 
                             <li onClick={() => history.push(`/profile/${user._id}`)}> <IconButton><AccountBoxOutlinedIcon fontSize='medium' style={{ color: 'white' }} /></IconButton>Profile</li>

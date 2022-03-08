@@ -34,7 +34,21 @@ const Post = ({ story, handleShowComments, setReload }) => {
             setPostLiked(true)
         }
 
-        setAttachments(story.content.attachments)
+
+        const attachments = story.content.attachments;
+        attachments.forEach((attachment) => {
+            if (attachment.contentType === 'image') {
+                setImages(oldArray => [...oldArray, attachment])
+            }
+            if (attachment.contentType === 'video') {
+                setVideos(oldArray => [...oldArray, attachment])
+            }
+            if (attachment.contentType === 'audio') {
+                setAudios(oldArray => [...oldArray, attachment])
+            }
+
+
+        })
     }, [])
   
     const handlePostInteraction = (postId, userId, type) => {
@@ -107,6 +121,8 @@ const Post = ({ story, handleShowComments, setReload }) => {
     }
 
     const allAttachments = [...images, ...videos, ...audios];
+
+    console.log('video', ...videos)
     return (
         <div className={styles.post}>
             {showPostSettings === true ? <div className={styles.postSettings}>
@@ -133,25 +149,25 @@ const Post = ({ story, handleShowComments, setReload }) => {
 
                     <Carousel swipeable={allAttachments.length > 1 ? true : false} autoplay autoFocus showStatus={false} showThumbs={false} transitionTime={700} showIndicators={false} showArrows={allAttachments.length === 1 ? false : true} >
 
-                        {images.length > 0 && images.map((img) => {
-                            return <div className={styles.slider}>
-                                <img src={img.url} alt='label' width='100px' height='500px' />
+                        {allAttachments.map((attach, i) => {
+                            if(attach.contentType === 'image') {
+                                return <div className={styles.slider} key={i}>
+                                <img src={attach.url} alt='label' width='100px' height='500px' />
                             </div>
-                        })}
-                        {videos.length > 0 && videos.map((vid) => {
-                            return <div className={styles.slider}>
-                                <video className={styles.sliderAttachment} muted autoPlay playsInline loop width='400px' height='500px'>
-                                    <source src={vid.url} type="video/mp4" />
+                            } else if(attach.contentType === 'video') {
+                                return <div className={styles.slider} key={i}>
+                                <video controls muted autoPlay playsInline loop width='400px' height='500px'>
+                                    <source src={attach.url} type="video/mp4" />
                                 </video>
                             </div>
-                        })}
-                        {audios.length > 0 && audios.map((audio) => {
-                            return <div className={styles.slider}>
-                                <img className={styles.sliderAttachment} src='https://4.bp.blogspot.com/-uhjF2kC3tFc/U_r3myvwzHI/AAAAAAAACiw/tPQ2XOXFYKY/s1600/Circles-3.gif' />
+                            } else {
+                                return <div className={styles.slider} key={i}>
+                                <img className={styles.sliderAttachment} src='https://c.tenor.com/OiwgU0MtwOcAAAAM/213.gif' />
                                 <audio controls autoplay>
-                                    <source src={audio.url} type='audio/mp3' />
+                                    <source src={attach.url} type='audio/mp3' />
                                 </audio>
                             </div>
+                            }
                         })}
                     </Carousel>
 

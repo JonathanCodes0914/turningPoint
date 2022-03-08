@@ -27,8 +27,8 @@ function App () {
         <PrivateRoute path='/profile/:id' exact component={Profile} />
         <PrivateRoute path='/feed' exact component={Feed} />
         <PrivateRoute path='/explore' exact component={Explore}/>
-        <PrivateRoute path='/content' exact component={Content}/>
-        <PrivateRoute path='/content/:id' exact component={SingleVideo}/>
+        {/* <PrivateRoute path='/content' exact component={Content}/> */}
+        {/* <PrivateRoute path='/content/:id' exact component={SingleVideo}/> */}
       </Switch>
       </Router>
       
