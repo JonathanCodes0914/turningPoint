@@ -82,10 +82,15 @@
     
 }
 
-.feed_RightContentPic {
-    display: none;
+.feed_RightContentPic > img {
+   width: 100%;
+   height: 250px;
 }
 
+
+.feed_RightContentWrapper > p {
+    text-align: center;
+}
 
 .feed_Left {
      display: none;

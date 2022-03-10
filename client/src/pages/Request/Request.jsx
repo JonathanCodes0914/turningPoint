@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { clientGetRequests, clientRequestResult } from '../../api/request';
 import { selectUser, login, selectToken } from '../../features/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import styles from '../Request/Request.module.css'
 
@@ -34,7 +35,15 @@ const Request = () => {
     clientRequestResult(data,token).then((res) => {
       if(res.status === 200) {
         setReload(true)
-        alert(`Request ${type}`, res)
+
+        toast(`Request ${type}`)
+        clientGetRequests(user._id, token).then((res) => {
+          if (res.status === 200) {
+            console.log(res.data.foundRequests)
+            setAllRequests(res.data.foundRequests)
+            setReload(false)
+          }
+        })
 
       }
     })

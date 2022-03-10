@@ -181,7 +181,7 @@ const Profile = () => {
 
                     {featuredPhotos ? (
                         <>
-                            <img onClick={() => {
+                            {/* <img onClick={() => {
                                 setViewPost({
                                     state: true
                                 })
@@ -198,11 +198,12 @@ const Profile = () => {
                             <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
                             <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
                             <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
-                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' />
+                            <img src='https://images.unsplash.com/photo-1543373014-cfe4f4bc1cdf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGlnaCUyMHJlcyUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80' /> */}
+                            <center><p>No Featured Photos</p></center>
                         </>
                     ) : (
                         <>
-                            {loading ? <Loading /> : myPosts.length !== 0 ? myPosts.map((post) => {
+                            {loading ? <span className={styles.profileLoader}><Loading /></span> : myPosts.length !== 0 ? myPosts.map((post) => {
                                 return post.content.attachments.length !== 0 ? displayAttachment(post._id, post.content.attachments) : <p>{post.content.caption}</p>
                             }) : <p>No Posts Yet</p>}
 

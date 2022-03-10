@@ -46,15 +46,18 @@ const Header = () => {
                     {user && <>
                         <Link onClick={() => setMenuActive(false)} className={styles.menuLink} to='/feed' > <li> <IconButton><DynamicFeedOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Feed</li></Link>
                         <hr />
-                        <Link onClick={() => setMenuActive(false)} className={styles.menuLink} to='/content' > <li> <IconButton><FeaturedVideoOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Content</li></Link>
-                        <hr />
+                        {/* <Link onClick={() => setMenuActive(false)} className={styles.menuLink} to='/content' > <li> <IconButton><FeaturedVideoOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Content</li></Link>
+                        <hr /> */}
                         <Link onClick={() => setMenuActive(false)} className={styles.menuLink} to='/explore' > <li> <IconButton><TravelExploreOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Explore</li></Link>
                         <hr />
                         <Link onClick={() => setMenuActive(false)} className={styles.menuLink} to={`/profile/${user._id}`} ><li> <IconButton><AccountBoxOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Profile</li></Link>
                         <hr />
                     </>}
 
-                    {user ? <Link className={styles.menuLink} to={`/profile/${user._id}`} onClick={() => handleLogout()}><li > <IconButton><ExitToAppOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Sign Out</li> </Link> : <Link className={styles.menuLink} to='/login' onClick={() => setMenuActive(false)}><li> <IconButton><LoginIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Login/Signup</li></Link>}
+                    {user ? <Link className={styles.menuLink} to={`/profile/${user._id}`} onClick={() => {
+                        handleLogout()
+                        setMenuActive(false)
+                    }}><li > <IconButton><ExitToAppOutlinedIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Sign Out</li> </Link> : <Link className={styles.menuLink} to='/login' onClick={() => setMenuActive(false)}><li> <IconButton><LoginIcon fontSize='medium' className={styles.headerIcon} /></IconButton>Login/Signup</li></Link>}
                     <hr />
                 </ul>
                 <div className={styles.blur}></div>

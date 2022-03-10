@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 require('dotenv').config();
 
+const { requireSignIn} = require('../controllers/authenticaton');
 const { createRequest, getRequests, acceptRequest} = require('../controllers/request');
 
-router.post('/createRequest', createRequest)
-router.post('/requestResult', acceptRequest)
-router.get('/getRequests/:userId', getRequests)
+router.post('/createRequest', requireSignIn, createRequest)
+router.post('/requestResult', requireSignIn, acceptRequest)
+router.get('/getRequests/:userId', requireSignIn, getRequests)
 
 
 

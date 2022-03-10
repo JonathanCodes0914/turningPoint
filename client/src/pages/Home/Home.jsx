@@ -16,33 +16,28 @@ const Home = () => {
             </video>
 
             
-            <h2>Social Space</h2>
+          
             
-
+           
           </div>
         </Carousel>
 
-        {/* <div className={styles.overlay}></div> */}
-        <div className={styles.text}>
-          
-{/*             
-             <h3  >
-               Never Stop Exploring
-             </h3>
-             
-             <p>
-             Lets Explore The Universe One Picture At A Time.
-             </p>
-            <a href='/content'><button initial={{x: -200}} animate={{  color: 'white', x: 0, y: 0, }}><button >Explore</button></button></a> */}
+        <div className={styles.overlay}>
+        <h2>Welcome To </h2>
+        <h2> Social Space!</h2>
+        
+        <p>Explore The Web And World Through Us</p>
+
+        
         </div>
+       
       </div>
       {/* <div className={styles.newsletter}>
              <h4>Signup To Receive Updates.</h4>
           
            <span>
            <input type='text'  placeholder='Email'/>
-           <motion.button initial={{x: -550}} animate={{ fontSize: 50, color: 'white', x: 0, y: 0}}><button >Send -></button></motion.button>
-          
+         
            </span>
          </div> */}
 

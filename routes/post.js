@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 require('dotenv').config();
 
-const { requireSignIn , isAuth, isAdmin} = require('../controllers/authenticaton');
+const { requireSignIn} = require('../controllers/authenticaton');
 const { interactPost,createPost, getAllPostByUser, getOnePostByUser, getUserFeedFollowersPosts} = require("../controllers/post");
 router.post('/createPost', requireSignIn,  createPost )
 router.post('/interactPost', requireSignIn, interactPost)

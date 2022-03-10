@@ -1,3 +1,7 @@
+.post {
+    width: 100%;
+
+}
 .feed_contentAvatar {
     position: relative;
   
@@ -40,10 +44,8 @@
 }
 
 .settingIcons {
-    position: relative;
-    display: block;
-    float: right;
-    margin-right: 10px;
+  float: right ;
+clear: both;
 }
 
 .sliderAttachment {
