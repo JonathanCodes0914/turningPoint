@@ -36,7 +36,7 @@ const Header = () => {
 
     return (
         <div className={styles.header} >
-            {menuActive && <div className={menuActive ? styles.menu_expand : styles.menu} >
+             <div className={menuActive ? styles.menu_expand : styles.menu} >
                 <ul ref={menuRef}>
                     <IconButton onClick={() => setMenuActive(false)}>
                         <CloseIcon fontSize='large' className={styles.headerCloseIcon} />
@@ -61,7 +61,7 @@ const Header = () => {
                     <hr />
                 </ul>
                 <div className={styles.blur}></div>
-            </div>}
+            </div>
             <div className={styles.headerLeft}>
                 {/* <img src={logo} width='400px' height='100px' alt='web logo'/> */}
                 <h1>Social Space</h1>

@@ -256,7 +256,7 @@ const Feed = () => {
                     <IconButton onClick={() => setShowCreatePost(false)}>
                         <ArrowBackIcon fontSize='large' />
                     </IconButton>
-                    <CreatePost setShowCreatePost={setShowCreatePost} setReloadType={setReloadType}/>
+                    <CreatePost setShowCreatePost={setShowCreatePost} showCreatePost={showCreatePost} setReloadType={setReloadType}/>
 
                 </div>
             )}
