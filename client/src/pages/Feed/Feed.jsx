@@ -119,9 +119,12 @@ const Feed = () => {
                 <>
 
                     <div className={styles.requestButtons}>
+                        <button onClick={() => setShowRequest(true)}>
                         <IconButton>
-                            <AssignmentSharpIcon onClick={() => setShowRequest(true)} fontSize='large' style={{ color: 'black' }} />
+                            <AssignmentSharpIcon fontSize='small' style={{ color: 'white' }} />
                         </IconButton>
+                            View Requests</button>
+                       
                     </div>
                     <div className={styles.feed_stories}>
                         <IconButton size='small'>

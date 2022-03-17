@@ -69,8 +69,7 @@ const Post = ({ story, handleShowComments, setReload }) => {
                         }
 
                         setReload(true)
-
-                        // still gotta delete attachments from fireabse
+                        toast('Post Deleted')
                     }
                 })
             } else {
@@ -95,34 +94,8 @@ const Post = ({ story, handleShowComments, setReload }) => {
 
     }
 
-
-
-    const setAttachments = (attachments) => {
-        if (attachments.length === 1 && attachments[0].contentType === 'image') {
-            setImages(attachments)
-        } else if (attachments.length === 1 && attachments[0].contentType === 'video') {
-            setVideos(attachments)
-        } else if (attachments.length === 1 && attachments[0].contentType === 'audio') {
-            setAudios(attachments)
-        }
-        if (attachments.length > 1) {
-            for (let i = 0; i < attachments.length; i++) {
-                if (attachments[i].contentType === 'image') {
-                    setImages(oldArray => [attachments[i], ...oldArray])
-                } else if (attachments[i].contentType === 'video') {
-                    setVideos(oldArray => [attachments[i], ...oldArray])
-
-                } else if (attachments[i].contentType === 'audio') {
-                    setAudios(oldArray => [attachments[i], ...oldArray])
-                }
-            }
-        }
-
-    }
-
     const allAttachments = [...images, ...videos, ...audios];
 
-    console.log('video', ...videos)
     return (
         <div className={styles.post}>
             {showPostSettings === true ? <div className={styles.postSettings}>

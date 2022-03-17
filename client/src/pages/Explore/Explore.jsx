@@ -9,6 +9,7 @@ import Loading from '../../components/Loading/Loading';
 import ViewPost from '../../components/ViewPost/ViewPost';
 import styles from './Explore.module.css';
 import { clientGetPexelsImages } from '../../api/pexels';
+import { clientGetUnsplashImages } from '../../api/unsplash';
 
 const Explore = () => {
     const dispatch = useDispatch();
@@ -50,6 +51,10 @@ const Explore = () => {
 
     useEffect(() => {
         setLoading(true)
+
+        clientGetUnsplashImages().then((res) => {
+            console.log('unsplash res', res)
+        })
         clientGetPexelsImages().then((res) => {
             setPexelsPhotos(res.data.photos)
             setLoading(false)

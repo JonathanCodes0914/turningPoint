@@ -1,7 +1,20 @@
 .requestButtons {
     display: flex;
     justify-content: end;
+    -webkit-justify-content: flex-end;
     padding-right: 30px;
+}
+
+.requestButtons > button {
+    background-color: darkcyan;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    text-align: center;
+    padding-right: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .feed_stories {
     display: flex;

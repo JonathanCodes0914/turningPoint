@@ -23,7 +23,6 @@ z-index: -1;
     display: block;
     background-color: white;
     border-radius: 43px;
-    border: 2px solid black;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -52,21 +51,25 @@ z-index: -1;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    width: 100vw;
+    width: 100%;
     place-items: center;
 }
 
-.profile_Content > img {
+.profile_Content > div > img {
     max-width: 100%;
     min-height: 130px;
     object-fit: fill;
 
 
 }
-.profile_Content > video {
+.profile_Content > div > video {
     width: 100px !important;
     height: 100px !important;
     flex: 1 1 30%;
+}
+
+.profile_Content > p {
+    text-align: center;
 }
 .profile_info{
     position: relative;
@@ -89,6 +92,8 @@ font-weight: bold;
 }
 
 .profileLoader {
-    position: absolute;
-    top: 50%;
+position: absolute;
+left:0;
+right:0;
+margin:0 auto;
 }

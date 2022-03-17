@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
         if (useremail) return res.status(400).send('User email already Registered')
         if (usernameexists) return res.status(400).send('User name already exists')
 
-        user = new User(req.body);
+        let user = new User(req.body);
 
         user.save((err, user) => {
             if (err) {
