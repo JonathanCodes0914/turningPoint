@@ -29,6 +29,7 @@ function App () {
         <PrivateRoute path='/explore' exact component={Explore}/>
         {/* <PrivateRoute path='/content' exact component={Content}/> */}
         {/* <PrivateRoute path='/content/:id' exact component={SingleVideo}/> */}
+        <Route path='*' component={() => (<div><center>404 Not Found</center></div>)} />
       </Switch>
       </Router>
       

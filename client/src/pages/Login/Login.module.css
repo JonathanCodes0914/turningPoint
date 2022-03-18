@@ -79,12 +79,10 @@ padding-right: 30px;
     width: 375px;
     height: 700px;
     border-radius: 10px;
-    color: white;
-    border: 2px solid gray;
+    color: black;
     background-position: center;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    background: conic-gradient(from 300deg at 50% 50%, #666570, #5c5c65, #53525b, #4a4951, #414047, #38383d, #302f34, #27272a, #1f1f21, #171719, #0e0e0f, #000000);
-
+    scroll-behavior: smooth;
 }
 .register__Form > form > div {
     display: flex;
@@ -101,7 +99,7 @@ padding-right: 30px;
     height:10px;
     border: 2px solid black;
     border-radius: 5px;
-    padding: 20px;
+    padding: 17px;
     font-size: 20px;
 }
 

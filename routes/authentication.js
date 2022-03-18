@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { signup , signin, signout, requireSignIn, isAdmin, isAuth} = require('../controllers/authenticaton');
+const { signup , signin, signout} = require('../controllers/authenticaton');
 
 //Routes for SIGNUP and LOGIN
 
