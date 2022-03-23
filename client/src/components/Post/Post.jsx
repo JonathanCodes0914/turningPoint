@@ -50,7 +50,7 @@ const Post = ({ story, handleShowComments, setReload }) => {
 
         })
     }, [])
-  
+
     const handlePostInteraction = (postId, userId, type) => {
         const data = { postId, userId, type };
 
@@ -123,23 +123,23 @@ const Post = ({ story, handleShowComments, setReload }) => {
                     <Carousel swipeable={allAttachments.length > 1 ? true : false} autoplay autoFocus showStatus={false} showThumbs={false} transitionTime={700} showIndicators={false} showArrows={allAttachments.length === 1 ? false : true} >
 
                         {allAttachments.map((attach, i) => {
-                            if(attach.contentType === 'image') {
+                            if (attach.contentType === 'image') {
                                 return <div className={styles.slider} key={i}>
-                                <img src={attach.url} alt='label' width='100px' height='500px' />
-                            </div>
-                            } else if(attach.contentType === 'video') {
+                                    <img src={attach.url} alt='label' width='100px' height='500px' />
+                                </div>
+                            } else if (attach.contentType === 'video') {
                                 return <div className={styles.slider} key={i}>
-                                <video controls muted autoPlay playsInline loop width='400px' height='500px'>
-                                    <source src={attach.url} type="video/mp4" />
-                                </video>
-                            </div>
+                                    <video controls muted autoPlay playsInline loop width='400px' height='500px'>
+                                        <source src={attach.url} type="video/mp4" />
+                                    </video>
+                                </div>
                             } else {
                                 return <div className={styles.slider} key={i}>
-                                <img className={styles.sliderAttachment} src='https://c.tenor.com/OiwgU0MtwOcAAAAM/213.gif' />
-                                <audio controls autoplay>
-                                    <source src={attach.url} type='audio/mp3' />
-                                </audio>
-                            </div>
+                                    <img className={styles.sliderAttachment} src='https://c.tenor.com/OiwgU0MtwOcAAAAM/213.gif' />
+                                    <audio controls autoplay>
+                                        <source src={attach.url} type='audio/mp3' />
+                                    </audio>
+                                </div>
                             }
                         })}
                     </Carousel>

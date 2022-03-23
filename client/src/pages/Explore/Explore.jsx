@@ -60,18 +60,7 @@ const Explore = () => {
             setLoading(false)
         }
         )
-        // const exploreStoriesItems = Array(8).fill({ caption: 'america the rgeatest', attachment: 'https://cdn.cheapism.com/images/011618_most_beautiful_views_in_the_world_sli.max-784x410_ZXOqfVp.jpg', username: 'cue banks' })
-        // setExploreStories(exploreStoriesItems)
-        // exploreStories.forEach((story, i) => {
-        //     const comp = (
-        //         <img src={story.attachment} alt={story.caption} />
-        //     )
 
-        //     const colNumber = i % 4;
-        //     gridCols[colNumber].push(comp);
-
-
-        // });
     }, [])
     console.log(pexelsPhotos)
     return (

@@ -68,8 +68,6 @@ const Feed = () => {
       
     }, [reload, token, user._id])
 
-    console.log('nasa state', nasaPic)
-
     const setReloadType = (type, postId) => {
         if(type === 'comment') {
            
