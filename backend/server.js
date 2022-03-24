@@ -20,7 +20,9 @@ mongoose.connect(process.env.DATABASE, {
 //middlewares
 app.use(morgan('dev'))
 app.use(cors())
-
+app.get('/', (req,res) => {
+    res.send('Connected')
+})
 //api routes
 app.use('/api',authRoutes);
 app.use('/api', userRoutes);
