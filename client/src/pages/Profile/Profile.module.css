@@ -50,9 +50,10 @@ z-index: -1;
 .profile_Content {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
     width: 100%;
-    place-items: center;
+   
 }
 
 .profile_Content > div > img {
