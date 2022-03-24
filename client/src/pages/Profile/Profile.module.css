@@ -47,27 +47,33 @@ z-index: -1;
     padding: 10px;
   
 }
+
 .profile_Content {
     height: 100%;
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
-    width: 100%;
-   
+    width: 100% !important;
+}
+
+.profile_Content > div {
+    margin-left: 4px;
 }
 
 .profile_Content > div > img {
-    max-width: 100%;
-    min-height: 130px;
-    object-fit: fill;
+    width: 33%;
+    height: 130px;
 
+    
 
 }
 .profile_Content > div > video {
-    width: 100px !important;
-    height: 100px !important;
-    flex: 1 1 30%;
+    width: 33%;
+    height: 130px;
+
 }
+
+.profile_Content > div > audio {
+    width: 33%;
+    height: 130px;
+} 
 
 .profile_Content > p {
     text-align: center;
