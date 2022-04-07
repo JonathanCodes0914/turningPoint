@@ -3,6 +3,8 @@
     height: 100%;
     max-width: 100%;
    overflow-x: hidden;
+   background-color: black;
+   color: white;
     }
 .showCase {
   background-color: white;
@@ -105,7 +107,16 @@
 
 .homeMiddle {
     position: relative;
-    background-color: red;
+    text-align: center;
+}
+.homeMiddle > p {
+    padding: 5px;
+}
+
+.homeMiddle > img {
+    width: auto;
+    height: 300px;
+    margin-bottom: 50px;
 }
 
 .slider {

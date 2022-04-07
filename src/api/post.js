@@ -1,7 +1,8 @@
 import axios from 'axios';
+const APIURL = process.env.REACT_APP_SITEURL;
 
 export const clientCreatePostRequest = async(data, token) => {
-    let response = await axios.post('/api/createPost', data, {
+    let response = await axios.post(`${APIURL}/api/createPost`, data, {
         headers: {
             Authorization: 'Bearer ' + token //the token is a variable which holds the token
           }
@@ -13,7 +14,7 @@ export const clientCreatePostRequest = async(data, token) => {
 
 
 export const clientGetProfilePostsRequest = async(userId, token) => {
-    let response = await axios.get(`/api/getUserPosts/${userId}`, {
+    let response = await axios.get(`${APIURL}/api/getUserPosts/${userId}`, {
         headers: {
             Authorization: 'Bearer ' + token //the token is a variable which holds the token
           }
@@ -24,7 +25,7 @@ export const clientGetProfilePostsRequest = async(userId, token) => {
 }
 
 export const clientGetOnePostRequest = async(postId, token) => {
-    let response = await axios.get(`/api/getUserPost/${postId}`, {
+    let response = await axios.get(`${APIURL}/api/getUserPost/${postId}`, {
         headers: {
             Authorization: 'Bearer ' + token //the token is a variable which holds the token
           }
@@ -35,7 +36,7 @@ export const clientGetOnePostRequest = async(postId, token) => {
 }
 
 export const clientGetFeedRequest = async(userId, token) => {
-    let response = await axios.get(`/api/getFeedPosts/${userId}`, {
+    let response = await axios.get(`${APIURL}/api/getFeedPosts/${userId}`, {
         headers: {
             Authorization: 'Bearer ' + token //the token is a variable which holds the token
           }
@@ -48,7 +49,7 @@ export const clientGetFeedRequest = async(userId, token) => {
 
 
 export const clientInteractPost = async(data, token) => {
-    let response = await axios.post(`/api/interactPost`, data , {
+    let response = await axios.post(`${APIURL}/api/interactPost`, data , {
         headers: {
             Authorization: 'Bearer ' + token //the token is a variable which holds the token
           }
